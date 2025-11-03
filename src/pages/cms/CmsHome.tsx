@@ -135,7 +135,7 @@ export default function CmsHome() {
         <div className="card">
           <i className="fa fa-user-o fa-2x text-lightblue"></i> {/* 사용자 아이콘 */}
           <div className="card_inner">
-            <p className="text-primary-p">회원 수</p> {/* 카드 제목 */}
+            <p className="text-primary-p">회원 수123</p> {/* 카드 제목 */}
             <span className="font-bold text-title">{stats.memberCount}</span> {/* 수치 표시 */}
           </div>
         </div>
