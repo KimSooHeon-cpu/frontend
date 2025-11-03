@@ -1,0 +1,59 @@
+//! [1] 상위 참조: CmsLayout.tsx의 [4-2] 항목에서 import 됨으로 참조
+
+import React from "react"; // [2] React 불러오기: 컴포넌트 생성용 필수 라이브러리
+import { NavLink } from "react-router-dom"; // [3] NavLink: 메뉴 클릭 시 경로 이동을 위한 React Router 기능
+
+// [4] CmsSidebar 컴포넌트 시작
+// - 좌측 고정 메뉴로, 관리자들이 다른 기능으로 이동할 수 있게 도와줌
+// - 각 메뉴는 NavLink로 연결되어 있으며, 현재 위치한 페이지는 강조 표시됨
+export default function CmsSidebar() {
+  
+  //! [251006 추가사항: role 타입 지정 및 null 방지]
+  const role: string = localStorage.getItem("adminRole") || ""; // string | null → string 변환
+
+  // [5] 메뉴 항목 정의
+  // - 각 메뉴는 이름과 이동할 URL로 구성됨
+  const menuItems = [
+    { name: "홈", path: "/cms/home" },
+    // { name: "회원 관리", path: "/cms/user" }, 
+    ...(role === "책임자" ? [{ name: "회원 관리", path: "/cms/user" }] : []), //! [251006] 책임자만 표시
+    { name: "시설 관리", path: "/cms/facility" },
+    { name: "신청 현황", path: "/cms/reservation" },
+    { name: "콘텐츠 관리", path: "/cms/contents" },
+    { name: "게시판 관리", path: "/cms/board" },
+  ];
+
+  // [6] JSX 렌더링 시작
+  // - 사이드바 전체는 세로 정렬(Flex Column)로 구성
+  // - TailwindCSS로 색상 및 간격 지정
+  return (
+    <aside className="w-64 bg-gray-800 text-white flex flex-col">
+      {/* [6-1] 상단 로고/타이틀 영역 */}
+      <div className="p-4 text-xl font-bold text-center border-b border-gray-700">
+        관리자 메뉴
+      </div>
+
+      {/* [6-2] 메뉴 목록 */}
+      <nav className="flex-1 overflow-y-auto">
+        {menuItems.map((item) => (
+          <NavLink
+            key={item.path} // 각 메뉴 구분용 고유 key
+            to={item.path} // 클릭 시 이동할 경로
+            className={({ isActive }) =>
+              `block px-4 py-2 text-sm hover:bg-gray-700 ${
+                isActive ? "bg-gray-700 font-semibold" : ""
+              }`
+            }
+          >
+            {item.name}
+          </NavLink>
+        ))}
+      </nav>
+
+      {/* [6-3] 하단 영역 (버전정보 등) */}
+      <div className="p-3 text-center text-xs border-t border-gray-700 text-gray-400">
+        © 2025 Gym CMS
+      </div>
+    </aside>
+  );
+}
