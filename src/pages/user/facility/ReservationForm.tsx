@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react"; // [1] React 훅과 라우터 기능 불러오기
+//import React, { useState, useEffect } from "react"; // [1] React 훅과 라우터 기능 불러오기
+import { useState, useEffect } from "react"; //![251106] [1] React 훅과 라우터 기능 불러오기
 import { useParams, useNavigate } from "react-router-dom";  // [1-2] 라우터 훅
 
 import { fetchFacilityById } from "../../../api/facilityApi"; // [2-1] 시설 단건 조회 API

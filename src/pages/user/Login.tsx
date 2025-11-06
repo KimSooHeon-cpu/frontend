@@ -5,7 +5,7 @@
 
 
 // [1] React 및 훅 불러오기
-import React, { useState } from "react";                            // React 기본
+import { useState } from "react"; //![251106] React 기본
 import { useNavigate } from "react-router-dom";                     // 라우터 이동 훅
 
 
@@ -232,4 +232,3 @@ export default function OldLogin() {
 }
 
 */
-

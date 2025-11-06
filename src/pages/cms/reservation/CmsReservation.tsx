@@ -5,7 +5,8 @@
 //! [수정일] 2025-10-25 (UI 개선 + 승인/취소 기능 유지)
 //! =============================================================
 
-import React, { useEffect, useState } from "react";
+//import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react"; //![251106]
 import api from "../../../api/axiosCms";
 import { useNavigate } from "react-router-dom";
 import "../../../css/all/form.css";

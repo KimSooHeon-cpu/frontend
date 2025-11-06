@@ -5,7 +5,7 @@
 // 1. GET /api/boards (전체 목록) → boardNum으로 게시판 제목을 찾음 (★추가된 로직)
 // 2. GET /api/boards/{boardId}/posts → 게시글 목록 조회 (★URL 파라미터 boardId를 PK로 사용)
 
-import React, { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react"; //![251106]
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../../api/axios"; // 사용자 전용 axios 인스턴스
 import {

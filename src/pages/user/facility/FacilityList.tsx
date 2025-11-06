@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react"; // [1] React 훅 불러오기
+//import React, { useEffect, useState } from "react"; // [1] React 훅 불러오기
+import { useEffect, useState } from "react"; //![251106] [1] React 훅 불러오기
 import { fetchFacilities } from "../../../api/facilityApi";
 import { useNavigate } from "react-router-dom";
 

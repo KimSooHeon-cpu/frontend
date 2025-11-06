@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react"; // [1] React 훅 불러오기
+//import React, { useState, useEffect } from "react"; // [1] React 훅 불러오기
+import { useState, useEffect } from "react"; //![251106] [1] React 훅 불러오기
 import { useParams, useNavigate, useLocation } from "react-router-dom"; // [2] 라우터 관련 훅
 import { createPayment } from "../../../api/paymentApi"; // [3] 결제 생성 API
 import { useAuth } from "../../../auth/useAuth"; // [4] 로그인 사용자 인증 훅

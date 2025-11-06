@@ -2,7 +2,8 @@
 // [설명] 리치 에디터 독립 테스트 페이지
 // [작성일] [251014]
 
-import React from "react";
+//import React, { useState } from "react";
+import { useState } from "react"; //![251106]
 import CustomEditor from "../../components/common/Editor/Editor";
 
 export default function EditorTest() {

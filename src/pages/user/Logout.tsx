@@ -1,5 +1,6 @@
 // [1] React 불러오기
-import React from "react";
+//import React, { useEffect } from "react";
+import { useEffect } from "react"; //![251106]
 
 // [2] 라우터 이동용 훅
 import { useNavigate } from "react-router-dom";
