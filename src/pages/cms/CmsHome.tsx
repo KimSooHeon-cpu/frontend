@@ -1,13 +1,12 @@
 //! [0] CMS 홈 대시보드 컴포넌트
 //! - 전체 통계(회원, 시설, 게시글, 예약 등) 및 시설별 예약 상태를 시각화
 
-<<<<<<< HEAD
 // import React, 
 import { useEffect, useState } from "react"; // React에서 컴포넌트를 만들고 상태관리(useState), 생명주기(useEffect) 기능을 불러옴
-=======
+
 //import React, { useEffect, useState } from "react"; // React에서 컴포넌트를 만들고 상태관리(useState), 생명주기(useEffect) 기능을 불러옴
 import { useEffect, useState } from "react"; //![251106] React에서 컴포넌트를 만들고 상태관리(useState), 생명주기(useEffect) 기능을 불러옴
->>>>>>> ecf63d41c1ea2fa9769abc3476ef12a1a5772527
+
 import api from "../../api/axiosCms"; // CMS 전용 axios 인스턴스를 불러옴 (토큰 자동 포함됨)
 import { BarChart, Bar, XAxis, YAxis, PieChart, Pie, Cell, Tooltip, Legend } from "recharts"; // Recharts: 막대그래프, 원형그래프 시각화용 라이브러리
 import "../../css/cms/cmsDashboard.css"; // Codersbite 기반 대시보드 스타일 (main__cards, charts__left/right 등 클래스 정의됨)
