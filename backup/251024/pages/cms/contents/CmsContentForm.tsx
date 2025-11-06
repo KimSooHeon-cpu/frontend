@@ -9,10 +9,9 @@
 
 // [1] 기본 설정 (React 훅, 라우터, axios)
 //import React, { useEffect, useState } from "react"; // React 기본 훅
-import { useEffect, useState } from "react"; //![251106] React 기본 훅 
+import { useEffect, useState } from "react"; //! [251106] React 기본 훅
 import { useNavigate, useSearchParams } from "react-router-dom"; // URL 파라미터 및 페이지 이동
 import api from "../../../api/axiosCms"; // CMS 전용 Axios 인스턴스
-import "../../../css/all/form.css";
 //import Editor from "../../../components/common/Editor/Editor"; // 서머노트는 구버전 리엑트에서만 지원되서 안사용함
 
 //^ 📝------------------------------------ [리치에디터] import ---------------------------------------
@@ -22,6 +21,7 @@ import Editor from "../../../components/common/Editor/Editor"; // [251014] 공�
 //* 💾------------------------------------ [파일업로드] import ---------------------------------------
 // [251013] 첨부파일 업로드 컴포넌트
 import FileUploadInput from "../../../components/FileUploadInput"; //* [251010]💾 공용 업로드 컴포넌트 import
+import apiCms from "../../../api/axiosCms"; //* [251010]💾 CMS 전용 axios 인스턴스 import
 import "draft-js/dist/Draft.css"; // ⚠️ [필수] Draft.js 내부 스타일 없으면 버튼 무반응
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css"; // 에디터 CSS 적용
 //* 💾------------------------------------ [파일업로드] import ---------------------------------------
@@ -161,116 +161,144 @@ export default function CmsContentForm() {
 
     // [6] 렌더링 (Tailwind 폼 구성)
     return (
-        <div className="form-container">
-            <form onSubmit={handleSubmit} className="form-box space-y-8">
-                {/* 상단 타이틀 (CmsFacilityForm 스타일 적용) */}
-                <div className="text-center border-b pb-6 mb-8">
-                    <h1 className="text-2xl font-bold text-slate-800">
-                        {isEditMode ? "콘텐츠 정보 수정" : "🆕 콘텐츠 등록"}
-                    </h1>
-                    <p className="text-gray-500 text-sm mt-2">
-                        CMS 시스템 내 콘텐츠 관리 페이지
-                    </p>
-                </div>
+        console.log("JSX 렌더링 시작"),
+        <div className="p-8 bg-white rounded shadow-md">
+            <h2 className="text-2xl font-bold mb-6 border-b pb-2">
+                {isEditMode ? "콘텐츠 수정" : "콘텐츠 등록"}
+            </h2>
 
+            <form onSubmit={handleSubmit} className="space-y-6">
                 {/* [6-1] 콘텐츠 구분 */}
                 <div>
-                    <label className="form-label">콘텐츠 구분</label>
-                    <select name="contentType" value={form.contentType} onChange={handleChange} className="form-input">
+                    <label className="block font-semibold mb-1">콘텐츠 구분</label>
+                    <select
+                        name="contentType"
+                        value={form.contentType}
+                        onChange={handleChange}
+                        className="border rounded w-full p-2"
+                    >
                         <option value="이용안내">이용안내</option>
                         <option value="상품·시설안내">상품·시설안내</option>
                     </select>
                 </div>
-                <br />
 
                 {/* [6-2] 제목 */}
                 <div>
-                    <label className="form-label">콘텐츠 제목</label>
-                    <input type="text" name="contentTitle" value={form.contentTitle} onChange={handleChange} className="form-input" required />
+                    <label className="block font-semibold mb-1">콘텐츠 제목</label>
+                    <input
+                        type="text"
+                        name="contentTitle"
+                        value={form.contentTitle}
+                        onChange={handleChange}
+                        className="border rounded w-full p-2"
+                        required
+                    />
                 </div>
-                <br />
 
                 {/* [6-3] 내용 */}
                 <div>
-                    <label className="form-label">콘텐츠 내용</label>
+                    <label className="block font-semibold mb-1">콘텐츠 내용</label>
+                    {/* 단순 텍스트 */}
+                    {/* 
+                        <textarea
+                        name="contentContent"
+                        value={form.contentContent}
+                        onChange={handleChange}
+                        className="border rounded w-full p-2 h-40"
+                        required
+                    ></textarea>  
+                    */}
                     {/* //^ 📝------------------------- [리치에디터] react-draft-wysiwyg 적용 영역  ----------------------------*/}
                     {/* ✅ [251014] 공용 리치에디터 컴포넌트로 대체 */}
                     <Editor
                         onChange={handleEditorChange}           // HTML 본문이 바뀔 때 실행되는 콜백
                         defaultValue={form.contentContent}      // 수정 모드일 경우 기존 내용 표시
                     />
-                </div>
-                <br />
+                    {/* //^ 📝------------------------- [리치에디터] react-draft-wysiwyg 적용 영역  ----------------------------*/}
 
-                {/* //* 💾----------------------------- [첨부파일] 첨부파일 업로드 적용 영역  --------------------------------*/}
-                <div>
-                    <label className="form-label">첨부파일 업로드</label>
-                    <FileUploadInput
-                        targetType="content"                          // 업로드 대상 (DB file_tbl.file_target_type)
-                        targetId={Number(contentId) || 0}             // 신규(0) or 수정모드(contentId)
-                        apiInstance={api}                             // CMS axiosCms 인스턴스
-                        onUploadSuccess={(path: string) => {          // 업로드 성공 시 콜백
-                            // ⚠️ path가 절대경로가 아니라면 여기서 명시적으로 확인/보정
-                            if (path) {
-                                const fullPath =
-                                    path.startsWith("/images/") || path.startsWith("http")
-                                        ? path
-                                        : `/images/content/${path}`; // ✅ 백엔드 저장 구조에 맞게 prefix 추가
+                    {/* //* 💾----------------------------- [첨부파일] 첨부파일 업로드 적용 영역  --------------------------------*/}
+                    {/* [6-3-1] 첨부파일 업로드 */}
+                    <div className="mt-6">
+                        <label className="block font-semibold mb-1">첨부파일 업로드</label>
 
-                                console.log("✅ 업로드 완료, 저장 경로:", fullPath);
-                                setForm((prev) => ({ ...prev, contentFilePath: fullPath }));
-                            } else {
-                                console.warn("⚠️ 업로드 경로가 비어 있음");
-                            }
-                        }}
-                    />
-                    {/* 업로드된 파일 경로 미리보기 */}
-                    {form.contentFilePath && (
-                        <p className="form-hint mt-1">
-                            업로드된 경로:
-                            <a
-                                href={`http://localhost:8181${form.contentFilePath}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-blue-600 underline ml-2"
-                            >
-                                {form.contentFilePath.split("/").pop()}
-                            </a>
-                        </p>
-                    )}
+                        <FileUploadInput
+                            targetType="content"                          // 업로드 대상 (DB file_tbl.file_target_type)
+                            targetId={Number(contentId) || 0}             // 신규(0) or 수정모드(contentId)
+                            apiInstance={api}                             // CMS axiosCms 인스턴스
+                            onUploadSuccess={(path: string) => {          // 업로드 성공 시 콜백
+                                // ⚠️ path가 절대경로가 아니라면 여기서 명시적으로 확인/보정
+                                if (path) {
+                                    const fullPath =
+                                        path.startsWith("/images/") || path.startsWith("http")
+                                            ? path
+                                            : `/images/content/${path}`; // ✅ 백엔드 저장 구조에 맞게 prefix 추가
+
+                                    console.log("✅ 업로드 완료, 저장 경로:", fullPath);
+                                    setForm((prev) => ({ ...prev, contentFilePath: fullPath }));
+                                } else {
+                                    console.warn("⚠️ 업로드 경로가 비어 있음");
+                                }
+                            }}
+                        />
+                        {/* //* 💾----------------------------- [첨부파일] 첨부파일 업로드 적용 영역  --------------------------------*/}
+
+                        {/* 업로드된 파일 경로 미리보기 */}
+                        {form.contentFilePath && (
+                            <div className="mt-2 text-sm text-gray-600">
+                                첨부파일:
+                                <a
+                                    href={`http://localhost:8181${form.contentFilePath}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-blue-600 underline ml-2"
+                                >
+                                    {form.contentFilePath.split("/").pop()}
+                                </a>
+                            </div>
+                        )}
+                        {/* //* 💾----------------------------- [첨부파일] 첨부파일 업로드 적용 영역  --------------------------------*/}
+                    </div>
                 </div>
-                <br />
 
                 {/* [6-4] 정렬번호 */}
                 <div>
-                    <label className="form-label">정렬 번호 (숫자가 작을수록 먼저 정렬됩니다)</label>
-                    <input type="number" name="contentNum" value={form.contentNum} onChange={handleChange} className="form-input" required />
+                    <label className="block font-semibold mb-1">콘텐츠번호 (2depth 순서)</label>
+                    <input
+                        type="number"
+                        name="contentNum"
+                        value={form.contentNum}
+                        onChange={handleChange}
+                        className="border rounded w-full p-2"
+                        required
+                    />
                 </div>
-                <br />
 
                 {/* [6-5] 사용여부 */}
                 <div>
-                    <label className="form-label">사용여부</label>
-                    <select name="contentUse" value={form.contentUse} onChange={handleChange} className="form-input">
+                    <label className="block font-semibold mb-1">사용여부</label>
+                    <select
+                        name="contentUse"
+                        value={form.contentUse}
+                        onChange={handleChange}
+                        className="border rounded w-full p-2"
+                    >
                         <option value="Y">Y (사용)</option>
                         <option value="N">N (미사용)</option>
                     </select>
                 </div>
 
                 {/* [6-6] 버튼 */}
-                <div className="pt-8 border-t border-slate-200 flex flex-col items-center space-y-4">
+                <div className="flex justify-end gap-3 mt-8">
                     <button
                         type="button"
                         onClick={handleCancel}
-                        style={{ width: "80%", maxWidth: "640px", height: "50px" }}
-                        className="secondary-button-style"
+                        className="px-4 py-2 border rounded hover:bg-gray-100"
                     >
                         취소
                     </button>
                     <button
                         type="submit"
-                        style={{ width: "85%", maxWidth: "640px", height: "50px" }}
-                        className="primary-button-style"
+                        className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
                     >
                         {isEditMode ? "수정" : "등록"}
                     </button>

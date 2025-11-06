@@ -9,15 +9,12 @@
 import { useEffect, useState } from "react"; //![251106] React 훅(useState, useEffect) 사용
 import { useNavigate } from "react-router-dom";     // 페이지 이동을 위한 라우터 훅
 import api from "../../../api/axiosCms";            // CMS 전용 axios 인스턴스 (토큰 자동 포함)
-import "../../../css/all/form.css";
-import "../../../css/cms/list.css";
 
 // [1] 콘텐츠 데이터 구조 정의 (백엔드 DTO(ContentResponse)와 동일)
 interface Content {
   contentId: number;       // 콘텐츠 식별번호(PK)
   contentTitle: string;    // 콘텐츠 제목
   contentType: string;     // 콘텐츠 상위 메뉴(이용안내 / 상품·시설안내)
-  contentNum: number;      // 정렬 번호
   contentUse: string;      // 사용 여부(Y/N)
   contentRegDate: string;  // 등록일
   contentModDate: string;  // 수정일
@@ -86,10 +83,10 @@ export default function CmsContentList() {
         });
       }
 
-      // 📅 정렬 번호 오름차순으로 정렬
+      // 📅 등록일 내림차순 정렬 (최신순)
       list.sort(
         (a: Content, b: Content) =>
-          a.contentNum - b.contentNum
+          new Date(b.contentRegDate).getTime() - new Date(a.contentRegDate).getTime()
       );
 
       // 📄 목록 및 통계 상태 갱신
@@ -109,18 +106,6 @@ export default function CmsContentList() {
     fetchContents();  // 조건에 맞는 목록 다시 조회
   };
 
-  const handleDelete = async (id: number) => {
-    if (!confirm("정말 삭제하시겠습니까?")) return;
-    try {
-      await api.delete(`/api/cms/contents/${id}`);
-      fetchContents();
-      alert("삭제되었습니다.");
-    } catch (err) {
-      console.error(err);
-      alert("삭제 실패");
-    }
-  };
-
   // 📄 현재 페이지에 맞는 데이터 계산
   const startIdx = (page - 1) * size;               // 현재 페이지 시작 인덱스 계산
   const endIdx = startIdx + size;                   // 현재 페이지 끝 인덱스 계산
@@ -130,7 +115,7 @@ export default function CmsContentList() {
   const goDetail = (id: number) => navigate(`/cms/contents/${id}`);
 
   // 📄 신규 등록 버튼 클릭 시 등록 폼으로 이동
-  const goForm = () => navigate("/cms/contents/form"); // 자동 번호 채번 로직 제거
+  const goForm = () => navigate("/cms/contents/form");
 
   // [5] 로딩 또는 오류 상태 처리
   if (loading) return <div className="p-6 text-gray-600">콘텐츠 목록을 불러오는 중...</div>;
@@ -138,119 +123,99 @@ export default function CmsContentList() {
 
   // [6] 실제 화면 렌더링
   return (
-    <div className="p-8 bg-gray-50 min-h-screen rounded-xl">
+    <div className="p-6"> {/* 전체 페이지 여백 */}
       {/* 상단 제목과 등록 버튼 영역 */}
-      <div className="flex justify-between items-center mb-6 border-b pb-4">
-        <h2 className="text-2xl font-bold text-gray-800">
-          📚 콘텐츠 관리
-          <span className="ml-2 text-sm text-gray-500">
-            (총 {totalCount}건)
-          </span>
-        </h2>
-      </div>
-
-
-      {/* 검색 및 필터 영역 */}
-      <div className="bg-white border border-slate-200 p-5 rounded-lg shadow-sm mb-5">
-        <div className="filter-search-row">
-
-          {/* 등록일 필터 그룹 */}
-          <div className="filter-group">
-            <label className="text-gray-700">등록일</label>
-            <input
-              type="date"
-              value={startDate}
-              onChange={(e) => setStartDate(e.target.value)}
-              className="form-input filter-input w-auto"
-            />
-            <span className="text-gray-500">~</span>
-            <input
-              type="date"
-              value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
-              className="form-input filter-input w-auto"
-            />
-          </div>
-
-          {/* 상위메뉴 필터 */}
-          <select
-            value={typeFilter}
-            onChange={(e) => setTypeFilter(e.target.value)}
-            className="form-input filter-select"
-          >
-            <option value="">전체 메뉴</option>
-            <option value="이용안내">이용안내</option>
-            <option value="상품/시설안내">상품·시설안내</option>
-          </select>
-
-          {/* 검색 입력창 */}
-          <input
-            type="text"
-            value={keyword}
-            onChange={(e) => setKeyword(e.target.value)}
-            placeholder="콘텐츠명, 작성자 검색"
-            className="form-input filter-input w-full"
-          />
-
-          {/* 검색 버튼 */}
-          <button
-            onClick={handleSearch}
-            className="common-button-style"
-          >
-            검색
-          </button>
-        </div>
-      </div>
-
-      {/* 콘텐츠 등록 버튼 영역 */}
-      <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '16px' }}>
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-xl font-bold text-gray-800">콘텐츠 관리 ({totalCount}건)</h2>
         <button
-          onClick={goForm}
-          className="primary-button-style"
+          onClick={goForm} // 콘텐츠 등록 페이지로 이동
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
         >
-          + 콘텐츠 등록
+          콘텐츠 등록
+        </button>
+      </div>
+
+      {/* 🔍📅 검색 및 필터 영역 */}
+      <div className="flex flex-wrap items-center gap-2 mb-4 text-sm">
+        {/* 📅 등록일 필터 */}
+        <label className="font-medium">등록일</label>
+        <input
+          type="date"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)} // 시작일 입력값 변경
+          className="border rounded px-2 py-1"
+        />
+        <span>~</span>
+        <input
+          type="date"
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}   // 종료일 입력값 변경
+          className="border rounded px-2 py-1"
+        />
+
+        {/* 🔍 상위메뉴 필터 */}
+        <select
+          value={typeFilter}
+          onChange={(e) => setTypeFilter(e.target.value)} // 상위메뉴 필터링 변경
+          className="border rounded px-2 py-1"
+        >
+          <option value="">전체 메뉴</option>
+          <option value="이용안내">이용안내</option>
+          <option value="상품/시설안내">상품·시설안내</option>
+        </select>
+
+        {/* 🔍 검색 입력창 */}
+        <input
+          type="text"
+          value={keyword}
+          onChange={(e) => setKeyword(e.target.value)}   // 검색어 변경 시 상태 업데이트
+          placeholder="콘텐츠명, 작성자 검색"
+          className="border rounded px-3 py-1 w-60"
+        />
+
+        {/* 🔍 검색 버튼 */}
+        <button
+          onClick={handleSearch} // 검색 실행
+          className="bg-gray-700 text-white px-4 py-1 rounded hover:bg-gray-800"
+        >
+          검색
         </button>
       </div>
 
       {/* 📄 콘텐츠 목록 테이블 */}
-      <div className="table-wrap">
-        <table className="table-fixed">
-          <thead>
+      <div className="bg-white shadow rounded-lg overflow-x-auto">
+        <table className="w-full table-auto text-sm text-gray-700">
+          <thead className="bg-gray-100">
             <tr>
-              <th>번호</th>
-              <th>상위메뉴</th>
-              <th>정렬 번호</th>
-              <th>콘텐츠 제목</th>
-              <th>작성자</th>
-              <th>사용여부</th>
-              <th>등록일</th>
-              <th>수정일</th>
-              <th>동작</th>
+              <th className="px-4 py-2 w-16">번호</th>
+              <th className="px-4 py-2 w-40">상위메뉴</th>
+              <th className="px-4 py-2">콘텐츠 제목</th>
+              <th className="px-4 py-2 w-32">작성자</th>
+              <th className="px-4 py-2 w-24">사용여부</th>
+              <th className="px-4 py-2 w-36">등록일</th>
+              <th className="px-4 py-2 w-36">수정일</th>
             </tr>
           </thead>
           <tbody>
             {pagedList.length > 0 ? (
               pagedList.map((c, idx) => (
-                <tr key={c.contentId}>
-                  <td>{startIdx + idx + 1}</td>
-                  <td>{c.contentType}</td>
-                  <td>{c.contentNum}</td>
-                  <td className="text-blue-600 underline cursor-pointer" onClick={() => goDetail(c.contentId)}>{c.contentTitle}</td>
-                  <td>{c.memberId}</td>
-                  <td>{c.contentUse === "Y" ? "사용" : "미사용"}</td>
-                  <td>{c.contentRegDate?.substring(0, 10)}</td>
-                  <td>{c.contentModDate?.substring(0, 10) || "-"}</td>
-                  <td>
-                    <div className="table-actions" style={{ textAlign: 'right' }}>
-                      <button className="edit" onClick={(e) => { e.stopPropagation(); navigate(`/cms/contents/form?contentId=${c.contentId}`); }}>수정</button>
-                      <button className="delete" onClick={(e) => { e.stopPropagation(); handleDelete(c.contentId); }} style={{ marginLeft: 8 }}>삭제</button>
-                    </div>
-                  </td>
+                <tr
+                  key={c.contentId}                          // 고유 key 설정
+                  onClick={() => goDetail(c.contentId)}       // 행 클릭 시 상세 이동
+                  className="hover:bg-blue-50 cursor-pointer border-b"
+                >
+                  <td className="px-4 py-2">{startIdx + idx + 1}</td> {/* 순번 표시 */}
+                  <td className="px-4 py-2">{c.contentType}</td>       {/* 상위 메뉴 */}
+                  <td className="px-4 py-2 text-blue-600 underline">{c.contentTitle}</td> {/* 제목 */}
+                  <td className="px-4 py-2">{c.memberId}</td>           {/* 작성자 ID */}
+                  <td className="px-4 py-2">{c.contentUse === "Y" ? "사용" : "미사용"}</td> {/* 사용여부 */}
+                  <td className="px-4 py-2">{c.contentRegDate?.substring(0, 10)}</td>       {/* 등록일 */}
+                  <td className="px-4 py-2">{c.contentModDate?.substring(0, 10) || "-"}</td> {/* 수정일 */}
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan={8} className="px-4 py-6 text-gray-500">
+                <td colSpan={7} className="px-4 py-6 text-gray-500">
                   등록된 콘텐츠가 없습니다. {/* 데이터 없을 때 표시 */}
                 </td>
               </tr>
@@ -260,7 +225,7 @@ export default function CmsContentList() {
       </div>
 
       {/* 📄 페이지 이동 버튼 */}
-      <div className="pagination-container">
+      <div className="flex justify-center items-center mt-4 space-x-2">
         <button
           onClick={() => setPage(page - 1)}              // 이전 페이지로 이동
           disabled={page === 1}                          // 첫 페이지에서 비활성화
