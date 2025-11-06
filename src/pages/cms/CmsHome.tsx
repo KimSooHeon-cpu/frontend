@@ -2,7 +2,7 @@
 //! - 전체 통계(회원, 시설, 게시글, 예약 등) 및 시설별 예약 상태를 시각화
 
 // import React, 
-import { useEffect, useState } from "react"; // React에서 컴포넌트를 만들고 상태관리(useState), 생명주기(useEffect) 기능을 불러옴
+// import { useEffect, useState } from "react"; // React에서 컴포넌트를 만들고 상태관리(useState), 생명주기(useEffect) 기능을 불러옴
 
 //import React, { useEffect, useState } from "react"; // React에서 컴포넌트를 만들고 상태관리(useState), 생명주기(useEffect) 기능을 불러옴
 import { useEffect, useState } from "react"; //![251106] React에서 컴포넌트를 만들고 상태관리(useState), 생명주기(useEffect) 기능을 불러옴
