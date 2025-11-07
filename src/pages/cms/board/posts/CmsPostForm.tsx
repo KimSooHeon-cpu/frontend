@@ -7,7 +7,6 @@
 //! [호출 위치]
 //!   - CmsApp.tsx → <Route path="boards/:boardId/posts/form" element={<CmsPostForm />} />
 //!   - CmsApp.tsx → <Route path="boards/:boardId/posts/:postId/edit" element={<CmsPostForm />} />
-
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import api from "../../../../api/axiosCms";
