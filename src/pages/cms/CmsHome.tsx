@@ -222,7 +222,9 @@ export default function CmsHome() {
               }}
             >
               {pieData.map((entry, i) => (
-                <Cell key={`cell-${i}`} fill={COLORS[i % COLORS.length]} /> // 색상 순환 적용
+                <Cell key={`cell-${i}`} 
+                      fill={entry.name !== "" ? COLORS[i % COLORS.length] 
+                            : COLORS[i % COLORS.length]} /> // 색상 순환 적용
               ))}
             </Pie>
             <Tooltip formatter={(v) => `${v}건`} /> {/* 마우스 오버 시 n건 표시 */}
