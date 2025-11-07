@@ -117,7 +117,8 @@ const CmsPostDetail: React.FC = () => {
       // ✅ 2) 앞에 / 없으면 붙이기
       const normalized = cleanPath.startsWith("/") ? cleanPath : `/${cleanPath}`;
       // ✅ 3) 백엔드 절대경로 조합
-      const downloadUrl = `http://localhost:8181${normalized}`;
+      // const downloadUrl = `http://localhost:8181${normalized}`;
+      const downloadUrl = `http://16.176.33.172:8181${normalized}`; // 20251107 수정      
       console.log("📎 [DEBUG] 최종 다운로드 URL =", downloadUrl);
       // ✅ 4) 새 탭으로 실행
       window.open(downloadUrl, "_blank");

@@ -37,8 +37,8 @@ export default function FacilityDetail() {
   // 이미지 경로 중복(/images/images) 방지 처리 및 기본이미지 지정
   const imageUrl = facility.facilityImagePath
     ? (facility.facilityImagePath.startsWith("/images")
-        ? `http://localhost:8181${facility.facilityImagePath}`
-        : `http://localhost:8181/images/${facility.facilityImagePath}`)
+        ? `http://16.176.33.172:8181${facility.facilityImagePath}`
+        : `http://16.176.33.172:8181/images/${facility.facilityImagePath}`) // 20251107 수정
     : "/no-image.png";
   //* --------------------------------------------------------------
     

@@ -199,8 +199,10 @@ export default function CmsPostForm() {
             />
           ) : (
             <div className="flex items-center gap-3">
+              </div>
               <a
-                href={`http://localhost:8181${form.postFilePath}`}
+                href={`http://16.176.33.172:8181${form.postFilePath}`} 
+                // 20251107 수정
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-600 underline"

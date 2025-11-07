@@ -7,7 +7,8 @@ import axios from "axios"; // [1-1] axios 기본 모듈 import
 // [2] 로그인 전용 axios 인스턴스 생성
 // ⚠️ 주의: 로그인/회원가입 등 비인증 요청 전용
 const axiosLogin = axios.create({
-  baseURL: "http://localhost:8181", // [2-1] API 기본 주소
+  // baseURL: "http://localhost:8181", // [2-1] API 기본 주소
+  baseURL: "http://16.176.33.172:8181", // [2-1] API 기본 주소 : 20251107 수정
   withCredentials: false,           // [2-2] 쿠키·자격정보 미포함 (CORS 단순요청 통과용)
   headers: { "Content-Type": "application/json" }, // [2-3] 기본 요청 헤더(JSON)
 });

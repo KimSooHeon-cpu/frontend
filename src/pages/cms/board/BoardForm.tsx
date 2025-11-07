@@ -232,7 +232,7 @@ const BoardFormPage: React.FC = () => { // 함수형 컴포넌트 선언
         현재 첨부파일:
         <a
           // href={`http://localhost:8181${boardFilePath}`}
-          href={`http://localhost:8181${boardFilePath.startsWith("/") ? boardFilePath : "/" + boardFilePath}`}
+          href={`http://16.176.33.172:8181${boardFilePath.startsWith("/") ? boardFilePath : "/" + boardFilePath}`} // 20251107 수정
           target="_blank"
           rel="noopener noreferrer"
           className="text-blue-600 underline ml-1"

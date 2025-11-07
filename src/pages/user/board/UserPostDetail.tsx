@@ -201,7 +201,7 @@ export default function UserPostDetail() {
     try {
       const cleanPath = filePath.replace(/^(\/)?posts\//, "");
       const normalized = cleanPath.startsWith("/") ? cleanPath : `/${cleanPath}`;
-      const downloadUrl = `http://localhost:8181${normalized}`;
+      const downloadUrl = `http://16.176.33.172:8181${normalized}`; // 20251107 수정
       window.open(downloadUrl, "_blank");
     } catch (err) {
       console.error("⚠️ [ERROR] 첨부파일 다운로드 실패:", err);

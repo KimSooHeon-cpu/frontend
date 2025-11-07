@@ -222,7 +222,8 @@ export default function UserPostForm() {
           ) : (
             <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
               <a
-                href={`http://localhost:8181${form.postFilePath}`}
+                href={`http://16.176.33.172:8181${form.postFilePath}`}
+                // 20251107 수정
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ color: theme.palette.primary.main, textDecoration: "underline" }}

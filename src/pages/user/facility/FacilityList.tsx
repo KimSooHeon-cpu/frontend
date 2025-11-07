@@ -182,16 +182,16 @@ export default function FacilityList() {
               }}
             >
 
-            {/* [12-1] 시설 이미지 */}
+            {/* [12-1] 시설 이미지 : AWS IP로 교체 : 20251107 수정 */}
             <img
               src={
                 f.facilityImagePath && f.facilityImagePath !== "string" // [251023] facilityImagePath가 "string" 같은 잘못된 값일 경우 기본 이미지로 교체
                 //* -------------------- 251021 images 경로 중복 방지 -----------------------------
-                //!  ? `http://localhost:8181${f.facilityImagePath}` //! ✅ 백엔드 경로 직접 지정
+                //!  ? `http://16.176.33.172:8181${f.facilityImagePath}` //! ✅ 백엔드 경로 직접 지정
                 //!  : "/no-image.png" //! 이미지 없을 때 기본 이미지
                 ? (f.facilityImagePath.startsWith("/images")       // ✅ 중복 방지
-                ? `http://localhost:8181${f.facilityImagePath}` // 이미 "/images" 포함 → 그대로 붙임
-                : `http://localhost:8181/images/${f.facilityImagePath}`) // 없을 때만 추가
+                ? `http://16.176.33.172:8181${f.facilityImagePath}` // 이미 "/images" 포함 → 그대로 붙임
+                : `http://16.176.33.172:8181/images/${f.facilityImagePath}`) // 없을 때만 추가
                 : "/no-image.png"
                 //* -------------------- 251021 images 경로 중복 방지 -----------------------------
               }

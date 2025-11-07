@@ -141,7 +141,8 @@ const EditorComponent: React.FC<EditorProps> = ({ onChange, defaultValue }) => {
         link = link.replace("/images/editor/", "/images/images/editor/"); // (예시: 이중 경로 수정)
       }
       if (!link.startsWith("http")) { // 상대 경로일 경우
-        link = "http://localhost:8181" + link; // 서버 주소를 붙여 절대 경로로 만듦
+        // link = "http://localhost:8181" + link; // 서버 주소를 붙여 절대 경로로 만듦
+        link = "http://16.176.33.172:8181" + link; // 서버 주소를 붙여 절대 경로로 만듦 : 20251107 수정
       }
       console.log("이미지 업로드 성공:", link); // 성공 로그 출력
       return Promise.resolve({ data: { link } }); // 에디터 라이브러리가 요구하는 형식으로 성공 결과 반환

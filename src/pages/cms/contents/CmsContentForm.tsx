@@ -229,7 +229,8 @@ export default function CmsContentForm() {
                         <p className="form-hint mt-1">
                             업로드된 경로:
                             <a
-                                href={`http://localhost:8181${form.contentFilePath}`}
+                                href={`http://16.176.33.172:8181${form.contentFilePath}`}
+                                // 20251107 수정
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-blue-600 underline ml-2"
