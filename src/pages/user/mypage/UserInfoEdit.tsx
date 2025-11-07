@@ -21,7 +21,7 @@ interface Member {
 // [3] 컴포넌트 정의
 export default function UserInfoEdit() {
   const theme = useTheme(); // [251021] MUI 테마 사용
-  const { authState } = useAuth(); // [3-1] 로그인 회원 정보
+  // const { authState } = useAuth(); // [3-1] 로그인 회원 정보
   const [member, setMember] = useState<Member | null>(null); // [3-2] 회원정보 상태
   const [loading, setLoading] = useState(true); // 로딩 상태
 
