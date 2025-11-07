@@ -7,6 +7,7 @@
 //! [호출 위치]
 //!   - CmsApp.tsx → <Route path="boards/:boardId/posts/form" element={<CmsPostForm />} />
 //!   - CmsApp.tsx → <Route path="boards/:boardId/posts/:postId/edit" element={<CmsPostForm />} />
+
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import api from "../../../../api/axiosCms";
@@ -144,7 +145,6 @@ export default function CmsPostForm() {
       <h2 className="text-2xl font-bold mb-6 border-b pb-2">
         {isEditMode ? "게시글 수정" : "게시글 등록"}
       </h2>
-
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* 제목 */}
         <div>
@@ -198,9 +198,8 @@ export default function CmsPostForm() {
             />
           ) : (
             <div className="flex items-center gap-3">
-              </div>
               <a
-                href={`http://16.176.33.172:8181${form.postFilePath}`}                 
+                href={`http://16.176.33.172:8181${form.postFilePath}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-600 underline"

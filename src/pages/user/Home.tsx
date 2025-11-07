@@ -211,8 +211,8 @@ export default function Home() {
 
             const imageUrl = validImagePath
               ? validImagePath.startsWith('/images')
-                ? `http://localhost:8181${validImagePath}`
-                : `http://localhost:8181/images/${validImagePath}`
+                ? `http://16.176.33.172:8181${validImagePath}`
+                : `http://16.176.33.172:8181/images/${validImagePath}`
               : '/no-image.png'; // 기본 이미지
 
             return (
