@@ -150,9 +150,9 @@ const EditorComponent: React.FC<EditorProps> = ({ onChange, defaultValue }) => {
   };
 
   // * [</>코드보기] 토글 버튼 클릭 시 코드보기 상태 반전
-  const toggleCodeView = () => { // '코드 보기' 버튼 클릭 시 실행될 함수
-    setIsCodeView((prev) => !prev); // isCodeView 상태를 true -> false 또는 false -> true로 변경
-  };
+  // const toggleCodeView = () => { // '코드 보기' 버튼 클릭 시 실행될 함수
+  //   setIsCodeView((prev) => !prev); // isCodeView 상태를 true -> false 또는 false -> true로 변경
+  //};
 
   // * [</>코드보기] textarea에서 변경된 내용 실시간 반영
   const handleCodeChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => { // textarea 내용이 바뀔 때 실행될 함수

@@ -19,7 +19,8 @@ import axiosLogin from "../../api/axiosLogin";                      //! [251009]
 
 
 // *[251021] MUI 테마 적용 관련 import 추가
-import { ThemeProvider, CssBaseline, Container, Paper, TextField, Button, Typography, Divider, Stack, FormControlLabel, Checkbox, Box } from "@mui/material"; // *[251021] MUI 컴포넌트
+// import { ThemeProvider, CssBaseline, Container, Paper, TextField, Button, Typography, Divider, Stack, FormControlLabel, Checkbox, Box } from "@mui/material"; // *[251021] MUI 컴포넌트
+import { ThemeProvider, CssBaseline, Paper, TextField, Button, Typography, Divider, Stack, FormControlLabel, Checkbox, Box } from "@mui/material"; // *[251021] MUI 컴포넌트
 import theme from "../../css/user/theme"; // *[251021] 커스텀 테마 import
 
 

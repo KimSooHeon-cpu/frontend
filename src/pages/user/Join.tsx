@@ -170,7 +170,7 @@ export default function Join() {
           required
           fullWidth
           variant="outlined"
-          slotProps={{ label: { shrink: true } }}
+          // slotProps={{ label: { shrink: true } }}
         />
         <TextField
           label="우편번호 (선택)"

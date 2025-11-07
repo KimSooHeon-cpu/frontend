@@ -1,4 +1,5 @@
-import { Box, Typography, Button, Paper } from '@mui/material'; // *[251013] MUI 컴포넌트 임포트
+// import { Box, Typography, Button, Paper } from '@mui/material'; // *[251013] MUI 컴포넌트 임포트
+import { Typography, Button, Paper } from '@mui/material'; // *[251013] MUI 컴포넌트 임포트
 import { useTheme } from '@mui/material/styles'; // *[251013] MUI 테마 사용
 import { useLocation } from 'react-router-dom'; // *[251013] 현재 URL 위치 정보 획득
 

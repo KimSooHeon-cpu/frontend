@@ -1,6 +1,7 @@
 // [1] React 및 Router 불러오기
 import "./UserApp.css"; //TODO [251021] 스타일 적용
-// import React, { useContext } from "react";
+// import React, 
+import { useContext } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"; // ⚠️ BrowserRouter 추가
 
 // [2] AuthContext 불러오기

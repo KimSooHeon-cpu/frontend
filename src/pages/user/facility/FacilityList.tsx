@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 // [2-1] MUI 컴포넌트 불러오기
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-import CardMedia from '@mui/material/CardMedia';
+// import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';

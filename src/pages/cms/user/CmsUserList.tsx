@@ -77,7 +77,7 @@ export default function CmsUserList() {
         list = list.filter((m: Member) => {
           const join = new Date(m.memberJoindate).getTime();
           const start = startDate ? new Date(startDate).getTime() : -Infinity;
-          const end = endDate ? new Date(endDate).getTime() : Infinity;
+          // const end = endDate ? new Date(endDate).getTime() : Infinity;
           // 날짜 검색 시, 끝 날짜는 해당 날짜의 23:59:59까지 포함하도록 조정
           const adjustedEnd = endDate ? new Date(endDate).getTime() + 86399999 : Infinity;
           return join >= start && join <= adjustedEnd;

@@ -15,7 +15,7 @@ import Button from '@mui/material/Button';  // 버튼
 import Select from '@mui/material/Select';  // 드롭다운 셀렉트박스
 import MenuItem from '@mui/material/MenuItem';  // 셀렉트 옵션
 import InputLabel from '@mui/material/InputLabel';  // 입력 라벨
-import FormControl from '@mui/material/FormControl';  // 폼 컨트롤 그룹
+// import FormControl from '@mui/material/FormControl';  // 폼 컨트롤 그룹
 
 // [4] 시설 데이터 타입 정의
 interface Facility {
