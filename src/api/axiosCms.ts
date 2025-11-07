@@ -4,7 +4,8 @@ import type { AxiosRequestConfig } from "axios"; // [1-1] 타입 전용 import
 
 // [2] axios 인스턴스 생성 : CMS 전용 API 설정
 const api = axios.create({
-  baseURL: "/api", // ✅ Vite proxy 사용 중이면 /api로 통일
+  // baseURL: "/api", // ✅ Vite proxy 사용 중이면 /api로 통일
+  baseURL: "/", // ✅ Vite proxy 사용 중이면 /api로 통일 : 20251107 수정
   withCredentials: false,
   headers: { "Content-Type": "application/json" },
 });
