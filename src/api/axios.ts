@@ -5,7 +5,8 @@ import type { AxiosRequestConfig } from "axios"; // [1-1] 타입 전용 import
 // [2] axios 인스턴스 생성 : 공통 API 호출 설정
 const api = axios.create({
   //baseURL: "http://localhost:8181", // [2-1] API 기본 주소 (Vite proxy 사용 시 "/api"로 대체 가능)
-  baseURL: "/api", 
+  // baseURL: "/api", 
+  baseURL: "/",  // 20251107 수정
   withCredentials: false,
   headers: { "Content-Type": "application/json" }, // [2-2] 기본 요청 헤더: JSON
 });
