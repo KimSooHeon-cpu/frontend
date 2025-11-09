@@ -7,6 +7,7 @@ import { fetchFacilities } from '../../api/facilityApi'; // [251023]
 import { useNavigate } from 'react-router-dom'; // [251023]
 import NoticeTable from '../../components/NoticeTable';
 import ContentTable from '../../components/ContentTable';
+import defaultImage from '../../components/imgaes/gym_default.png'; //~ [251109] 기본 이미지 추가
 import FacilityCard from '../../components/FacilityCard';
 
 import Box from '@mui/material/Box';
@@ -213,7 +214,8 @@ export default function Home() {
               ? validImagePath.startsWith('/images')
                 ? `http://16.176.33.172:8181${validImagePath}`
                 : `http://16.176.33.172:8181/images/${validImagePath}`
-              : '/no-image.png'; // 기본 이미지
+              //: '/no-image.png'; // 기본 이미지
+              : defaultImage; //~ [251109] 기본 이미지 변경
 
             return (
               <Grid
