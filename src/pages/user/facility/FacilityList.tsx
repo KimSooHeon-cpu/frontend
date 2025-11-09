@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"; // [1] React 훅 불러오기
 import { fetchFacilities } from "../../../api/facilityApi";
+import defaultImage from "../../../components/imgaes/gym_default.png"; //~ [251109] 기본 이미지 변경
 import { useNavigate } from "react-router-dom";
 
 // [2-1] MUI 컴포넌트 불러오기
@@ -191,7 +192,8 @@ export default function FacilityList() {
                 ? (f.facilityImagePath.startsWith("/images")       // ✅ 중복 방지
                 ? `http://localhost:8181${f.facilityImagePath}` // 이미 "/images" 포함 → 그대로 붙임
                 : `http://localhost:8181/images/${f.facilityImagePath}`) // 없을 때만 추가
-                : "/no-image.png"
+                //: "/no-image.png"
+                : defaultImage //~ [251109] 기본 이미지 변경
                 //* -------------------- 251021 images 경로 중복 방지 -----------------------------
               }
               alt={f.facilityName}
