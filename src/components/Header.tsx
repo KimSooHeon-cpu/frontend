@@ -18,12 +18,12 @@ const Header: React.FC = () => {
   const { authState, logoutHandler } = useAuth(); // [251110] useAuth 훅으로 변경
   const access = !!authState.token; // [2-1] 토큰 존재 여부로 로그인 여부 판별
 
-  // [251110] 관리자 여부 확인 로직 추가
-  const isAdmin = authState.memberRole === 'admin';
-  // 'adminRole' 또는 'memberRole'에 관리자 역할이 포함되어 있는지 확인
-  // const userRole = authState.adminRole || authState.memberRole || '';
-  // const adminRoles = ["책임자", "최고관리자", "관리자", "admin"];
-  // const isAdmin = adminRoles.some(role => userRole.includes(role));
+  // [251110] 관리자 여부 확인 로직 수정: memberRole이 'admin'인지 직접 확인
+  //const isAdmin = authState.memberRole === 'admin';
+  // [관리자 확인 로직 수정] authState와 localStorage에서 직접 역할을 가져와 관리자 여부 판단
+  const userRole = authState.memberRole || localStorage.getItem("adminRole") || '';
+  const adminRoles = ["책임자", "최고관리자", "관리자", "admin"];
+  const isAdmin = adminRoles.some(role => userRole.includes(role));
 
   return (
     // [3] 최상단 헤더 영역 레이아웃
