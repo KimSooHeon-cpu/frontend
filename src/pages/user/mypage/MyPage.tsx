@@ -53,6 +53,9 @@ export default function MyPage() { // 컴포넌트 시작
   const { authState } = useAuth(); // 로그인된 사용자 상태를 authState에서 읽음
   const navigate = useNavigate(); // 페이지 이동 함수 획득
 
+  //~ [추가] authState.memberId 값 확인용 콘솔 로그
+  console.log("회원ID", authState.memberId);
+
     // * 251016 모달 스타일 정의 (반드시 컴포넌트 함수 내에 선언)
   const modalStyle = {
     position: 'absolute' as const,
