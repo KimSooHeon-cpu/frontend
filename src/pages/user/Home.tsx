@@ -214,9 +214,7 @@ export default function Home() {
               ? validImagePath.startsWith('/images')
                 ? `http://16.176.33.172:8181${validImagePath}`
                 : `http://16.176.33.172:8181/images/${validImagePath}`
-              : '/no-image.png'; // 기본 이미지
-              //: '/no-image.png'; // 기본 이미지
-              : defaultImage; //~ [251109] 기본 이미지 변경
+              : defaultImage; //~ [251109] 기본 이미지 변경, 이전 라인 삭제
 
             return (
               <Grid
@@ -229,7 +227,6 @@ export default function Home() {
                     lg: 'span 2', // 큰 화면에서는 6열 배치
                   },
                 }}
-                {...({} as any)} //! [251024] 타입 에러를 무시하는 코드
               >
                 <FacilityCard
                   name={f.facilityName}
@@ -258,7 +255,6 @@ export default function Home() {
               width: '100%',
               height: '100%',
             }}
-            {...({} as any)} //! [251024] 타입 에러를 무시하는 코드
           >
             {/* 공지사항 게시판 제목과 목록 NoticeTable 컴포넌트 전달 */}
             <NoticeTable
@@ -281,7 +277,6 @@ export default function Home() {
               width: '100%',
               height: '100%',
             }}
-            {...({} as any)} //! [251024] 타입 에러를 무시하는 코드
           >
             {/* 콘텐츠 게시판 제목과 목록 ContentTable 컴포넌트 전달 */}
             <ContentTable
