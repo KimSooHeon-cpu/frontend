@@ -146,7 +146,7 @@ export default function Home() {
       try {
         // 2. 모든 활성 게시판 목록을 가져옴
         const allBoardsRes = await api.get('/api/boards');
-        const allBoards = allBoardsRes.data?.data || [];
+        const allBoards = allBoardsRes.data || [];
 
         // 3. boardNum '01'에 해당하는 게시판의 boardId와 제목을 찾음
         const noticeBoard = allBoards.find((b: any) => b.boardNum === '01' && b.boardUse === 'Y');
@@ -155,7 +155,7 @@ export default function Home() {
           setNoticeBoardId(noticeBoard.boardId); // boardId 저장
           // 4. 찾은 boardId로 게시글을 요청
           const noticePostsRes = await api.get(`/api/boards/${noticeBoard.boardId}/posts`, { params: { page: 1, size: 5 } });
-          setNoticePostsRaw(noticePostsRes.data || []);
+          setNoticePostsRaw(noticePostsRes.data.items || []);
         }
 
         // 5. boardNum '02'에 해당하는 게시판의 boardId와 제목을 찾음
@@ -165,7 +165,7 @@ export default function Home() {
           setContentBoardId(contentBoard.boardId); // boardId 저장
           // 6. 찾은 boardId로 게시글을 요청
           const contentPostsRes = await api.get(`/api/boards/${contentBoard.boardId}/posts`, { params: { page: 1, size: 5 } });
-          setContentPostsRaw(contentPostsRes.data || []);
+          setContentPostsRaw(contentPostsRes.data.items || []);
         }
       } catch (err) {
         console.error('홈 화면 데이터 로딩 실패:', err);
