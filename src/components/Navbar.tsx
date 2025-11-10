@@ -61,7 +61,8 @@ const Navbar: React.FC = () => {
 
     if (contentMap[type]) return;
     try {
-      const res = await api.get(`/api/contents?type=${type}`);
+      //const res = await api.get(`/api/contents?type=${type}`);
+      const res = await api.get(`/contents?type=${type}`);
       let list: ContentItem[] = res.data?.data || [];
       const filteredList = list
         .filter((c) => c.contentUse === "Y")
