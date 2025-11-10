@@ -136,10 +136,8 @@ export default function UserPostForm() {
         await api.post(`/api/boards/${boardId}/posts`, params, config);
         alert("게시글이 등록되었습니다.");
       }
-      // 💥 [OLD] 문제의 코드: 실제 PK인 boardId로 이동하여 목록 페이지에서 오류 발생
-      // navigate(`/board/${boardId}`);
-      // ✅ [FIX] 저장해둔 boardNum을 사용하여 올바른 목록 페이지로 이동
-      navigate(`/board/${boardNumForNav}`);
+      // [251110] boardNum/boardId 혼용 문제 해결: 목록으로 돌아갈 때도 URL 파라미터로 받은 boardId를 일관되게 사용
+      navigate(`/board/${boardId}`);
     } catch (err: any) {
       console.error("게시글 저장 실패:", err);
       const msg =
@@ -153,10 +151,8 @@ export default function UserPostForm() {
   };
 
   // 취소 → 목록으로 이동
-  // 💥 [OLD] 문제의 코드: 실제 PK인 boardId로 이동하여 목록 페이지에서 오류 발생
-  // const handleCancel = () => navigate(`/board/${boardId}`);
-  // ✅ [FIX] 저장해둔 boardNum을 사용하여 올바른 목록 페이지로 이동
-  const handleCancel = () => navigate(`/board/${boardNumForNav}`);
+  // [251110] boardNum/boardId 혼용 문제 해결: 목록으로 돌아갈 때도 URL 파라미터로 받은 boardId를 일관되게 사용
+  const handleCancel = () => navigate(`/board/${boardId}`);
 
   // 첨부파일 삭제
   const handleFileDelete = () => {
