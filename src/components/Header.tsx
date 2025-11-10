@@ -19,8 +19,7 @@ const Header: React.FC = () => {
   const access = !!authState.token; // [2-1] 토큰 존재 여부로 로그인 여부 판별
 
   // [251110] 관리자 여부 확인 로직 추가
-  const adminRoles = ['admin', 'ROLE_ADMIN', '책임자', '관리자', '강사', '담당자'];
-  const isAdmin = authState.memberRole && adminRoles.includes(authState.memberRole);
+  const isAdmin = authState.memberRole === 'admin';
 
   return (
     // [3] 최상단 헤더 영역 레이아웃
