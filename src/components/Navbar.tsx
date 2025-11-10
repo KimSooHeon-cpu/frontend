@@ -61,8 +61,7 @@ const Navbar: React.FC = () => {
 
     if (contentMap[type]) return;
     try {
-      //const res = await api.get(`/api/contents?type=${type}`);
-      const res = await api.get(`/contents?type=${type}`);
+      const res = await api.get(`/api/contents?type=${type}`);
       let list: ContentItem[] = res.data?.data || [];
       const filteredList = list
         .filter((c) => c.contentUse === "Y")
@@ -186,7 +185,8 @@ const Navbar: React.FC = () => {
                         <Button
                           key={board.boardId}
                           component={Link}
-                          to={`/board/${board.boardNum}`}
+                          // [251110] URL 파라미터를 boardNum이 아닌 실제 PK boardId로 통일
+                          to={`/board/${board.boardId}`}
                           fullWidth
                           sx={{
                             justifyContent: "flex-start",
