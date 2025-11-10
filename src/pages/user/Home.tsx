@@ -16,7 +16,7 @@ import Grid from '@mui/material/Grid';
 import api from '../../api/axios';
 
 export type PostSummary = {
-  id: number;
+  postId: number; // [251110] id -> postId로 변경하여 다른 컴포넌트와 데이터 구조 일치
   postTitle: string;
   memberName?: string;
   postViewCount?: number;
@@ -32,7 +32,7 @@ const formatDateOnly = (dateStr?: string): string => {
 // [251023] 백엔드 PostResponse를 PostSummary 타입으로 변환
 const transformPosts = (posts: any[]): PostSummary[] =>
   posts.map(({ postId, postTitle, memberName, postViewCount, postRegDate }) => ({
-    id: postId,
+    postId: postId, // [251110] id -> postId로 변경
     postTitle,
     memberName,
     postViewCount,
