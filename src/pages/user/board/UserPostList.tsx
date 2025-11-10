@@ -44,6 +44,20 @@ interface BoardItem {
   boardUse: string;
 }
 
+//~ [251110] 날짜 전환 함수
+const formatCustomDate = (dateStr?: string): string => {
+  // 날짜 데이터가 없거나 너무 짧으면 "-"를 반환합니다.
+  if (!dateStr || dateStr.length < 8) {
+    return "-";
+  }
+  // '20251107153000' 형식의 문자열에서 년, 월, 일을 추출합니다.
+  const year = dateStr.substring(0, 4);
+  const month = dateStr.substring(4, 6);
+  const day = dateStr.substring(6, 8);
+  // 'YYYY-MM-DD' 형식으로 조합하여 반환합니다.
+  return `${year}-${month}-${day}`;
+};
+
 export default function UserPostList() {
   const theme = useTheme(); // [251021] theme.tsx 스타일 적용용
   const navigate = useNavigate();
@@ -222,8 +236,9 @@ export default function UserPostList() {
                   </TableCell>
                   <TableCell>{p.memberName || p.memberId}</TableCell>
                   <TableCell>{p.postViewCount}</TableCell>
-                  <TableCell>{p.postRegDate}</TableCell>
+                  {/* <TableCell>{p.postRegDate}</TableCell> */}
                   {/* <TableCell>{p.postRegDate ? new Date(p.postRegDate).toISOString().slice(0, 10) : "-"}</TableCell> */}
+                  <TableCell>{formatCustomDate(p.postRegDate)}</TableCell>
 
                   <TableCell>
                     {/* 로그인한 사용자 == 작성자일 때만 수정 가능 */}
