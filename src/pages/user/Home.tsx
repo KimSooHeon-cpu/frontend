@@ -146,7 +146,7 @@ export default function Home() {
       try {
         // 2. 모든 활성 게시판 목록을 가져옴
         const allBoardsRes = await api.get('/api/boards');
-        const allBoards = allBoardsRes.data || [];
+        const allBoards = allBoardsRes.data?.data || [];
 
         // 3. boardNum '01'에 해당하는 게시판의 boardId와 제목을 찾음
         const noticeBoard = allBoards.find((b: any) => b.boardNum === '01' && b.boardUse === 'Y');
@@ -155,7 +155,7 @@ export default function Home() {
           setNoticeBoardId(noticeBoard.boardId); // boardId 저장
           // 4. 찾은 boardId로 게시글을 요청
           const noticePostsRes = await api.get(`/api/boards/${noticeBoard.boardId}/posts`, { params: { page: 1, size: 5 } });
-          setNoticePostsRaw(noticePostsRes.data.items || []);
+          setNoticePostsRaw(noticePostsRes.data || []);
         }
 
         // 5. boardNum '02'에 해당하는 게시판의 boardId와 제목을 찾음
@@ -165,7 +165,7 @@ export default function Home() {
           setContentBoardId(contentBoard.boardId); // boardId 저장
           // 6. 찾은 boardId로 게시글을 요청
           const contentPostsRes = await api.get(`/api/boards/${contentBoard.boardId}/posts`, { params: { page: 1, size: 5 } });
-          setContentPostsRaw(contentPostsRes.data.items || []);
+          setContentPostsRaw(contentPostsRes.data || []);
         }
       } catch (err) {
         console.error('홈 화면 데이터 로딩 실패:', err);
@@ -214,7 +214,9 @@ export default function Home() {
               ? validImagePath.startsWith('/images')
                 ? `http://16.176.33.172:8181${validImagePath}`
                 : `http://16.176.33.172:8181/images/${validImagePath}`
-              : defaultImage; //~ [251109] 기본 이미지 변경, 이전 라인 삭제
+              : '/no-image.png'; // 기본 이미지
+              //: '/no-image.png'; // 기본 이미지
+              : defaultImage; //~ [251109] 기본 이미지 변경
 
             return (
               <Grid
@@ -227,6 +229,7 @@ export default function Home() {
                     lg: 'span 2', // 큰 화면에서는 6열 배치
                   },
                 }}
+                {...({} as any)} //! [251024] 타입 에러를 무시하는 코드
               >
                 <FacilityCard
                   name={f.facilityName}
@@ -255,6 +258,7 @@ export default function Home() {
               width: '100%',
               height: '100%',
             }}
+            {...({} as any)} //! [251024] 타입 에러를 무시하는 코드
           >
             {/* 공지사항 게시판 제목과 목록 NoticeTable 컴포넌트 전달 */}
             <NoticeTable
@@ -277,6 +281,7 @@ export default function Home() {
               width: '100%',
               height: '100%',
             }}
+            {...({} as any)} //! [251024] 타입 에러를 무시하는 코드
           >
             {/* 콘텐츠 게시판 제목과 목록 ContentTable 컴포넌트 전달 */}
             <ContentTable
