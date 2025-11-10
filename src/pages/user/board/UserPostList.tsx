@@ -222,7 +222,9 @@ export default function UserPostList() {
                   </TableCell>
                   <TableCell>{p.memberName || p.memberId}</TableCell>
                   <TableCell>{p.postViewCount}</TableCell>
-                  <TableCell>{p.postRegDate ? new Date(p.postRegDate).toISOString().slice(0, 10) : "-"}</TableCell>
+                  {/* [251110] postRegDate가 유효한 문자열일 때만 날짜 변환을 수행하도록 수정 */}
+                  {/* [OLD]<TableCell>{p.postRegDate ? new Date(p.postRegDate).toISOString().slice(0, 10) : "-"}</TableCell> */}
+                  <TableCell>{p.postRegDate && p.postRegDate.trim() !== '' ? new Date(p.postRegDate).toISOString().slice(0, 10) : "-"}</TableCell>
 
                   <TableCell>
                     {/* 로그인한 사용자 == 작성자일 때만 수정 가능 */}
