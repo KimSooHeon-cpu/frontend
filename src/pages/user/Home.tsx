@@ -1,13 +1,12 @@
 // Home.tsx
 
-// import React, { useEffect, useState, useMemo } from 'react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useAuth } from '../../auth/useAuth';
 import { fetchFacilities } from '../../api/facilityApi'; // [251023]
 import { useNavigate } from 'react-router-dom'; // [251023]
 import NoticeTable from '../../components/NoticeTable';
 import ContentTable from '../../components/ContentTable';
-import defaultImage from '../../components/imgaes/gym_default.png'; //~ [251109] 기본 이미지 추가
+import defaultImage from '../../components/imgaes/gym_default.png'; //~ [251109] 기본 이미 추가
 import FacilityCard from '../../components/FacilityCard';
 
 import Box from '@mui/material/Box';
@@ -42,8 +41,8 @@ const transformPosts = (posts: any[]): PostSummary[] =>
 
 export default function Home() {
   // 인증 상태를 확인합니다
-  // const { authState } = useAuth();
-  // const access = !!authState.token;
+  const { authState } = useAuth();
+  const access = !!authState.token;
   const navigate = useNavigate(); // [251023]
 
   // [251023] 시설 목록 상태 선언: 시설 리스트 데이터를 저장합니다
@@ -67,7 +66,6 @@ export default function Home() {
   const [contentBoardId, setContentBoardId] = useState<number | null>(null); // ^[251025] boardId 상태 추가 (baordNum이 높은 boardId추적 목적)
 
   // [251023] 게시판 제목 조회 함수 (전체 게시판 조회 후 boardNum으로 매칭)
-  /*
   const fetchBoardTitle = async (boardNum: string, setTitle: React.Dispatch<React.SetStateAction<string>>) => {
     try {
       // 전체 게시판 목록 API 호출
@@ -89,10 +87,8 @@ export default function Home() {
       setTitle('제목 로드 오류');
     }
   };
-  */
 
   // [251023] 게시글 목록 조회 함수 (boardNum 기반 게시글 불러오기)
-  /*
   const fetchPosts = async (boardNum: string, setPostsRaw: React.Dispatch<React.SetStateAction<any[]>>) => {
     try {
       // 게시글 목록 API 호출. 실제 사용 시에는 boardNum이 PK(boardId)인지 확인 필요
@@ -107,7 +103,6 @@ export default function Home() {
       setPostsRaw([]);
     }
   };
-  */
 
   // [251023] 시설 목록 API 호출 및 상태 업데이트
   const loadFacilities = async () => {
@@ -123,7 +118,7 @@ export default function Home() {
   // ^ ------------------------------------ [251025] OLD --------------------------------------
   // [251023] 컴포넌트가 처음 렌더링될 때 수행하는 API 호출 모음
   // useEffect(() => {
-
+  
   // 시설 목록 불러오기
   //   loadFacilities();
   //   console.log('시설 경로들:', facilities.map(f => f.facilityImagePath));
@@ -212,10 +207,9 @@ export default function Home() {
 
             const imageUrl = validImagePath
               ? validImagePath.startsWith('/images')
-                ? `http://16.176.33.172:8181${validImagePath}`
-                : `http://16.176.33.172:8181/images/${validImagePath}`
-              : '/no-image.png'; // 기본 이미지
-              //: '/no-image.png'; // 기본 이미지
+                ? `http://localhost:8181${validImagePath}`
+                : `http://localhost:8181/images/${validImagePath}`
+              // : '/no-image.png'; // 기본 이미지
               : defaultImage; //~ [251109] 기본 이미지 변경
 
             return (
