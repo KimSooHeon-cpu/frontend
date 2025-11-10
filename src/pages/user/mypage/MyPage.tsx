@@ -176,7 +176,9 @@ export default function MyPage() { // 컴포넌트 시작
         api.get("/api/cards/main"),
         api.get("/api/cards/sub"),
       ]); // Promise.all 끝
-      setCards([...mainRes.data.data, ...subRes.data.data]); // 상태 갱신
+      //setCards([...mainRes.data.data, ...subRes.data.data]); // 상태 갱신
+      // ~ [251110] API 응답이 null일 경우를 대비하여 기본값([]) 추가
+      setCards([...(mainRes.data.data ?? []), ...(subRes.data.data ?? [])]); // 상태 갱신
       alert("대표카드가 변경되었습니다."); // 알림
     } catch (err) { // 실패 시
       console.error("[카드대표 변경 실패]:", err); // 에러 로깅
@@ -216,7 +218,9 @@ export default function MyPage() { // 컴포넌트 시작
           api.get("/api/accounts/main"),
           api.get("/api/accounts/sub"),
         ]); // Promise.all 끝
-        setAccounts([...mainRes.data.data, ...subRes.data.data]); // 상태 갱신
+        //setAccounts([...mainRes.data.data, ...subRes.data.data]); // 상태 갱신
+        // ~ [251110] API 응답이 null일 경우를 대비하여 기본값([]) 추가
+        setAccounts([...(mainRes.data.data ?? []), ...(subRes.data.data ?? [])]); // 상태 갱신
         alert("계좌가 등록되었습니다."); // 알림
       } else { // 카드 등록 분기
         const formData = new URLSearchParams();
