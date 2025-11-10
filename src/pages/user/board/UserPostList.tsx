@@ -46,16 +46,11 @@ interface BoardItem {
 
 //~ [251110] 날짜 전환 함수
 const formatCustomDate = (dateStr?: string): string => {
-  // 날짜 데이터가 없거나 너무 짧으면 "-"를 반환합니다.
-  if (!dateStr || dateStr.length < 8) {
+  // 날짜 데이터가 없으면 "-"를 반환하고, 있으면 앞에서 10글자만 잘라 반환.
+  if (!dateStr) {
     return "-";
   }
-  // '20251107153000' 형식의 문자열에서 년, 월, 일을 추출합니다.
-  const year = dateStr.substring(0, 4);
-  const month = dateStr.substring(4, 6);
-  const day = dateStr.substring(6, 8);
-  // 'YYYY-MM-DD' 형식으로 조합하여 반환합니다.
-  return `${year}-${month}-${day}`;
+  return dateStr.slice(0, 10);
 };
 
 export default function UserPostList() {
