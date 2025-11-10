@@ -39,37 +39,35 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ name, image, reservationUrl
       }}
     >
       {/* [251023] 시설 이미지 감싸는 Link: 클릭 시 시설 목록 페이지로 이동 */}
-      <Link to="/facilities">
-        {image ? (
-          // [251023] 이미지가 있으면 CardMedia로 출력, 스타일 지정
-          <CardMedia
-            component="img" // HTML img 요소로 렌더링
-            image={image}
-            alt={name}
-            sx={{
-              width: '100%',    // [251023] 가로폭 100%
-              height: '240px',   // [251023] 고정 높이
-              objectFit: 'cover', // [251023] 이미지 비율 유지하며 꽉 채움
-              mx: 'auto',         // [251023] 수평 중앙 정렬
-              borderRadius: 0,    // [251023] 모서리 둥글기 없음 (상단 카드랑 연결)
-            }}
-          />
-        ) : (
-          // [251023] 이미지 없는 경우 대체 빈 박스(회색 배경), 크기 및 중앙 정렬 포함
-          <Box
-            sx={{
-              height: 140,
-              backgroundColor: 'grey.300',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRadius: 1,
-            }}
-          >
-            {/* [251023] 빈 공간, 필요 시 아이콘이나 텍스트 삽입 가능 */}
-          </Box>
-        )}
-      </Link>
+      {image ? (
+        // [251023] 이미지가 있으면 CardMedia로 출력, 스타일 지정
+        <CardMedia
+          component="img" // HTML img 요소로 렌더링
+          image={image}
+          alt={name}
+          sx={{
+            width: '100%',    // [251023] 가로폭 100%
+            height: '240px',   // [251023] 고정 높이
+            objectFit: 'cover', // [251023] 이미지 비율 유지하며 꽉 채움
+            mx: 'auto',         // [251023] 수평 중앙 정렬
+            borderRadius: 0,    // [251023] 모서리 둥글기 없음 (상단 카드랑 연결)
+          }}
+        />
+      ) : (
+        // [251023] 이미지 없는 경우 대체 빈 박스(회색 배경), 크기 및 중앙 정렬 포함
+        <Box
+          sx={{
+            height: 140,
+            backgroundColor: 'grey.300',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: 1,
+          }}
+        >
+          {/* [251023] 빈 공간, 필요 시 아이콘이나 텍스트 삽입 가능 */}
+        </Box>
+      )}
 
       {/* [251023] 카드 하단에 시설명, 예약 버튼 */}
       <CardContent sx={{ flexGrow: 1, textAlign: 'center' }}>
