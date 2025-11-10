@@ -108,6 +108,7 @@ export default function MyPage() { // 컴포넌트 시작
               api.get("/api/accounts/sub"), // 일반 계좌 API 호출(백엔드 규격 유지)
             ]); // Promise.all 끝
             const merged = [...(mainRes.data.data ?? []), ...(subRes.data.data ?? [])]; // 둘을 합침
+            console.log("계좌(merged):",merged);
             setAccounts(merged); // 합쳐진 목록을 상태에 저장 (UI에서는 '소지 중인 계좌'로 표기)
           } else { // 카드 타입인 경우
             const [mainRes, subRes] = await Promise.all([ // 대표/서브 카드 가져오기
@@ -115,6 +116,7 @@ export default function MyPage() { // 컴포넌트 시작
               api.get("/api/cards/sub"), // 일반 카드 API 호출
             ]); // Promise.all 끝
             const mergedCards = [...(mainRes.data.data ?? []), ...(subRes.data.data ?? [])]; // 합침
+            console.log("카드(mergedCards):", mergedCards);
             setCards(mergedCards); // 상태에 저장 (UI에서는 '소지 중인 카드'로 표기)
           } // if-else 끝
         } catch (err) { // 에러 처리
