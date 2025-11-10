@@ -53,9 +53,6 @@ export default function MyPage() { // 컴포넌트 시작
   const { authState } = useAuth(); // 로그인된 사용자 상태를 authState에서 읽음
   const navigate = useNavigate(); // 페이지 이동 함수 획득
 
-  //~ [추가] authState.memberId 값 확인용 콘솔 로그
-  console.log("회원ID", authState.memberId);
-
     // * 251016 모달 스타일 정의 (반드시 컴포넌트 함수 내에 선언)
   const modalStyle = {
     position: 'absolute' as const,
@@ -146,6 +143,8 @@ export default function MyPage() { // 컴포넌트 시작
   // [11] 대표계좌 변경 핸들러 (백엔드 엔드포인트 호출 유지)
   const handleSetMainAccount = async (id: number) => { // 함수 시작
     try { // 시도
+      //~ [추가] authState.memberId 값 확인용 콘솔 로그
+      console.log("회원ID", authState.memberId);
       await api.patch(`/api/accounts/${id}/main`); // 대표계좌로 설정하는 API 호출
       const [mainRes, subRes] = await Promise.all([ // 변경 후 목록 재조회
         api.get("/api/accounts/main"), // 대표 목록
