@@ -185,6 +185,7 @@ const Navbar: React.FC = () => {
                         <Button
                           key={board.boardId}
                           component={Link}
+                          to={`/board/${board.boardNum}`}
                           to={`/api/board/${board.boardNum}`}
                           fullWidth
                           sx={{
