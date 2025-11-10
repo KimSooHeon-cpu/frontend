@@ -185,8 +185,7 @@ const Navbar: React.FC = () => {
                         <Button
                           key={board.boardId}
                           component={Link}
-                          to={`/board/${board.boardNum}`}
-                          to={`/api/board/${board.boardNum}`}
+                          to={`/board/${board.boardNum}`}                          
                           fullWidth
                           sx={{
                             justifyContent: "flex-start",
