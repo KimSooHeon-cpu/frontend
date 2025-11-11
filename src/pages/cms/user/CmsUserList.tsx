@@ -261,7 +261,8 @@ export default function CmsUserList() {
                     </span>
                   </td>
                   <td className="px-5 py-3">{m.memberMobile}</td>
-                  <td className="px-5 py-3">{m.memberJoindate?.substring(0, 10)}</td>
+                  {/* <td className="px-5 py-3">{m.memberJoindate?.substring(0, 10)}</td> : 251111 교정 : 에러 출력 */}
+                  <td className="px-5 py-3">{m.memberJoindate}</td>
                   <td className="px-5 py-3 text-right table-actions">
                     <button onClick={() => handleRowClick(m.memberId)} className="edit">수정</button>
                     <button onClick={() => handleDelete(m.memberId)} className="delete">삭제</button>
