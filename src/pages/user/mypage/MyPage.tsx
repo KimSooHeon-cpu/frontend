@@ -369,7 +369,8 @@ export default function MyPage() { // 컴포넌트 시작
                         <TableRow key={acc.accountId}>
                           <TableCell>{acc.accountBank}</TableCell>
                           <TableCell>{acc.accountNumber.replace(/^(\d{2})(.*)$/, (_, f, rest) => `${f}${"*".repeat(rest.length)}`)}</TableCell>
-                          <TableCell>{acc.accountRegDate.split("T")[0]}</TableCell>
+                          {/* <TableCell>{acc.accountRegDate.split("T")[0]}</TableCell> : 251111 */}
+                          <TableCell>{acc.accountRegDate}</TableCell>
                           <TableCell>
                             <Button variant="outlined" color="success" size="small" onClick={() => handleSetMainAccount(acc.accountId)}>대표</Button>
                             <Button variant="outlined" color="error" size="small" sx={{ ml: 1 }} onClick={() => handleDeleteAccount(acc.accountId)}>삭제</Button>
