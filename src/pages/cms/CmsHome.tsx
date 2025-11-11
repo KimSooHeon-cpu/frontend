@@ -78,7 +78,7 @@ export default function CmsHome() {
     });
 
     // [8-3] 시설별 예약 상태 비율 요청
-    api.get("/api/cms/dashboard/facility-status").then((res) => {
+    api.get("/api/cms/dashboard/facility-stats").then((res) => {
       const mapped = res.data
         .map((f: any) => [
           { facilityType: f.facilityType ?? f.FACILITYTYPE, resvStatus: "완료", cnt: f.doneCount ?? f.DONECOUNT },
