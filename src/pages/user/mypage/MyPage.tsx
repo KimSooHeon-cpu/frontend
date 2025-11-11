@@ -104,8 +104,14 @@ export default function MyPage() { // 컴포넌트 시작
         try { // try 시작
           if (methodType === "account") { // 계좌 타입이면
             const [mainRes, subRes] = await Promise.all([ // 서버에서 대표/서브 둘 다 가져옴
-              api.get("/api/accounts/main"), // 대표 계좌 API 호출(백엔드 규격 유지)
-              api.get("/api/accounts/sub"), // 일반 계좌 API 호출(백엔드 규격 유지)
+              
+              // 251111 : 사용자 아이디 인자 추가
+              // api.get("/api/accounts/main"), // 대표 계좌 API 호출(백엔드 규격 유지)
+              // api.get("/api/accounts/sub"), // 일반 계좌 API 호출(백엔드 규격 유지)
+
+              api.get("/api/accounts/main?memberId="+localStorage.getItem("memberId")), // 대표 계좌 API 호출(백엔드 규격 유지)
+              api.get("/api/accounts/sub?memberId="+localStorage.getItem("memberId")), // 일반 계좌 API 호출(백엔드 규격 유지)
+
             ]); // Promise.all 끝
             const merged = [...(mainRes.data.data ?? []), ...(subRes.data.data ?? [])]; // 둘을 합침
             setAccounts(merged); // 합쳐진 목록을 상태에 저장 (UI에서는 '소지 중인 계좌'로 표기)
