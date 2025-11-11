@@ -224,11 +224,18 @@ export default function CmsFacilityList() {
                       {f.facilityUse ? "사용중" : "미사용"}
                     </span>
                   </td>
-                  <td className="px-5 py-3 text-gray-600">
+                  {/* <td className="px-5 py-3 text-gray-600">
                     {f.facilityRegDate
                       ? f.facilityRegDate.substring(0, 10)
                       : "-"}
+                  </td> : 251111 교정 조치 */}
+
+                  <td className="px-5 py-3 text-gray-600">
+                    {f.facilityRegDate
+                      ? f.facilityRegDate[0] + "-" + f.facilityRegDate[1] + "-" + f.facilityRegDate[2]
+                      : "-"}
                   </td>
+
                   <td className="px-5 py-3 text-right table-actions">
                     <button onClick={() => handleEdit(f.facilityId)} className="edit">수정</button>
                     <button onClick={() => handleDelete(f.facilityId)} className="delete">삭제</button>
