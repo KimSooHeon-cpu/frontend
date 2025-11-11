@@ -405,7 +405,8 @@ export default function MyPage() { // 컴포넌트 시작
                         <TableRow key={cd.cardId}>
                           <TableCell>{cd.cardBank}</TableCell>
                           <TableCell>{cd.cardNumber.replace(/^(\d{2})(.*)$/, (_, f, rest) => `${f}${"*".repeat(rest.length)}`)}</TableCell>
-                          <TableCell>{cd.cardRegDate.split("T")[0]}</TableCell>
+                          {/* <TableCell>{cd.cardRegDate.split("T")[0]}</TableCell> */}
+                          <TableCell>{cd.accountRegDate[0] + "-" +  cd.accountRegDate[1] + "-" + cd.accountRegDate[2]}</TableCell>
                           <TableCell>
                             <Button variant="outlined" color="success" size="small" onClick={() => handleSetMainCard(cd.cardId)}>대표</Button>
                             <Button variant="outlined" color="error" size="small" sx={{ ml: 1 }} onClick={() => handleDeleteCard(cd.cardId)}>삭제</Button>
