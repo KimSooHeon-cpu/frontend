@@ -1,7 +1,9 @@
 // [1] React 및 훅 불러오기
-import React, { useContext } from "react"; // [1-1] useContext: 전역 Context(AuthContext) 접근용
+//import React, { useContext } from "react"; // [1-1] useContext: 전역 Context(AuthContext) 접근용
+import React from "react"; // [251110] useContext 대신 useAuth 훅 사용
 import { Link } from "react-router-dom";   // [1-2] Link: 페이지 이동용 컴포넌트
-import AuthContext from "../context/AuthContext"; //! [251002] 추가사항: 로그인 상태 확인 및 로그아웃 처리를 위해 AuthContext 불러오기
+//import AuthContext from "../context/AuthContext"; //! [251002] 추가사항: 로그인 상태 확인 및 로그아웃 처리를 위해 AuthContext 불러오기
+import { useAuth } from "../auth/useAuth"; // [251110] AuthContext를 직접 사용하는 대신 useAuth 훅 사용
 
 // [251016] 알림 아이콘 컴포넌트 import (빨간 점 뱃지 포함)
 import NotificationBell from "./Notification/NotificationBell"; // [추후 활성화 예정] 알림 컴포넌트 비활성화 위해 주석 처리
@@ -12,8 +14,16 @@ import Typography from '@mui/material/Typography'; // * 251016 텍스트 (폰트
 
 const Header: React.FC = () => {
   // [2] AuthContext 사용해서 로그인 상태(authState)와 로그아웃 핸들러 가져오기
-  const { authState, logoutHandler } = useContext(AuthContext)!; //! [251002]
+  //const { authState, logoutHandler } = useContext(AuthContext)!; //! [251002]
+  const { authState, logoutHandler } = useAuth(); // [251110] useAuth 훅으로 변경
   const access = !!authState.token; // [2-1] 토큰 존재 여부로 로그인 여부 판별
+
+  // [251110] 관리자 여부 확인 로직 수정: memberRole이 'admin'인지 직접 확인
+  //const isAdmin = authState.memberRole === 'admin';
+  // [관리자 확인 로직 수정] authState와 localStorage에서 직접 역할을 가져와 관리자 여부 판단
+  const userRole = authState.memberRole || localStorage.getItem("adminRole") || '';
+  const adminRoles = ["책임자", "최고관리자", "관리자", "admin"];
+  const isAdmin = adminRoles.some(role => userRole.includes(role));
 
   return (
     // [3] 최상단 헤더 영역 레이아웃
@@ -77,6 +87,19 @@ const Header: React.FC = () => {
                 마이페이지 {/* 로그인 시 접근 가능 */}
               </Button>
 
+              {/* [251110] 관리자일 경우 CMS 페이지 이동 버튼 표시 */}
+              {isAdmin && (
+                <Button
+                  component={Link}
+                  to="/cms"
+                  variant="contained"
+                  color="secondary"
+                  sx={{ minWidth: 120 }}
+                >
+                  관리자 페이지
+                </Button>
+              )}
+              
               <Button
                 onClick={logoutHandler} //! [251002] 로그아웃 버튼 클릭 시 Context의 logoutHandler 실행
                 variant="contained" // *[251016] MUI contained variant

@@ -102,10 +102,11 @@ export default function UserApp() {
             />
 
             {/* ✅ 게시판 (게시판명 클릭 시 이동) */}
-            <Route path="/api/board/:boardId" element={<UserPostList />} />{/* 목록 */}
-            <Route path="/api/board/:boardId/posts/:postId" element={<UserPostDetail />} />{/* 상세 */}
-            <Route path="/api/board/:boardId/form" element={<UserPostForm />} />{/* 등록 */}
-            <Route path="/api/board/:boardId/posts/:postId/edit" element={<UserPostForm />} />{/* 수정 */}
+            {/* [251110] /board/ → /api/board/ */}
+            <Route path="/board/:boardId" element={<UserPostList />} />{/* 목록 */}
+            <Route path="/board/:boardId/posts/:postId" element={<UserPostDetail />} />{/* 상세 */}
+            <Route path="/board/:boardId/form" element={<UserPostForm />} />{/* 등록 */}
+            <Route path="/board/:boardId/posts/:postId/edit" element={<UserPostForm />} />{/* 수정 */}
             
             
             {/* //! [251014] 리치 에디터 테스트용 */}

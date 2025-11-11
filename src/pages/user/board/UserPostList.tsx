@@ -44,6 +44,15 @@ interface BoardItem {
   boardUse: string;
 }
 
+//~ [251110] 날짜 전환 함수
+const formatCustomDate = (dateStr?: string): string => {
+  // 날짜 데이터가 없으면 "-"를 반환하고, 있으면 앞에서 10글자만 잘라 반환.
+  if (!dateStr) {
+    return "-";
+  }
+  return dateStr.slice(0, 10);
+};
+
 export default function UserPostList() {
   const theme = useTheme(); // [251021] theme.tsx 스타일 적용용
   const navigate = useNavigate();
@@ -222,7 +231,9 @@ export default function UserPostList() {
                   </TableCell>
                   <TableCell>{p.memberName || p.memberId}</TableCell>
                   <TableCell>{p.postViewCount}</TableCell>
-                  <TableCell>{p.postRegDate ? new Date(p.postRegDate).toISOString().slice(0, 10) : "-"}</TableCell>
+                  {/* <TableCell>{p.postRegDate}</TableCell> */}
+                  {/* <TableCell>{p.postRegDate ? new Date(p.postRegDate).toISOString().slice(0, 10) : "-"}</TableCell> */}
+                  <TableCell>{formatCustomDate(p.postRegDate)}</TableCell>
 
                   <TableCell>
                     {/* 로그인한 사용자 == 작성자일 때만 수정 가능 */}

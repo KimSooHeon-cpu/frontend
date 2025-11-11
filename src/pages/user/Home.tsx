@@ -1,12 +1,12 @@
 // Home.tsx
 
-// import React, { useEffect, useState, useMemo } from 'react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useAuth } from '../../auth/useAuth';
 import { fetchFacilities } from '../../api/facilityApi'; // [251023]
 import { useNavigate } from 'react-router-dom'; // [251023]
 import NoticeTable from '../../components/NoticeTable';
 import ContentTable from '../../components/ContentTable';
+import defaultImage from '../../components/imgaes/gym_default.png'; //~ [251109] 기본 이미지 변경
 import FacilityCard from '../../components/FacilityCard';
 
 import Box from '@mui/material/Box';
@@ -41,8 +41,8 @@ const transformPosts = (posts: any[]): PostSummary[] =>
 
 export default function Home() {
   // 인증 상태를 확인합니다
-  // const { authState } = useAuth();
-  // const access = !!authState.token;
+  const { authState } = useAuth();
+  const access = !!authState.token;
   const navigate = useNavigate(); // [251023]
 
   // [251023] 시설 목록 상태 선언: 시설 리스트 데이터를 저장합니다
@@ -64,49 +64,6 @@ export default function Home() {
   const [contentPostsRaw, setContentPostsRaw] = useState<any[]>([]);
   const [contentBoardTitle, setContentBoardTitle] = useState<string>('콘텐츠 목록');
   const [contentBoardId, setContentBoardId] = useState<number | null>(null); // ^[251025] boardId 상태 추가 (baordNum이 높은 boardId추적 목적)
-
-  // [251023] 게시판 제목 조회 함수 (전체 게시판 조회 후 boardNum으로 매칭)
-  /*
-  const fetchBoardTitle = async (boardNum: string, setTitle: React.Dispatch<React.SetStateAction<string>>) => {
-    try {
-      // 전체 게시판 목록 API 호출
-      const allBoardsRes = await api.get('/api/boards');
-      const allBoards = allBoardsRes.data?.data || [];
-
-      // boardNum과 게시판 사용여부('Y')를 비교하여 맞는 게시판 객체 찾기
-      const foundBoard = allBoards.find((b: any) => b.boardNum === boardNum && b.boardUse === 'Y');
-      if (foundBoard) {
-        // 찾은 게시판의 제목을 상태에 설정
-        setTitle(foundBoard.boardTitle);
-      } else {
-        // 게시판이 없으면 기본 텍스트로 설정
-        setTitle('제목 없음');
-      }
-    } catch (err) {
-      // API 호출 실패 시 에러 로그 출력 및 상태 기본값 설정
-      console.error('게시판 제목 조회 실패:', err);
-      setTitle('제목 로드 오류');
-    }
-  };
-  */
-
-  // [251023] 게시글 목록 조회 함수 (boardNum 기반 게시글 불러오기)
-  /*
-  const fetchPosts = async (boardNum: string, setPostsRaw: React.Dispatch<React.SetStateAction<any[]>>) => {
-    try {
-      // 게시글 목록 API 호출. 실제 사용 시에는 boardNum이 PK(boardId)인지 확인 필요
-      const res = await api.get(`/api/boards/${boardNum}/posts`, {
-        params: { page: 1, size: 5 },
-      });
-      // 받은 데이터를 상태에 저장하여 UI에 출력 준비
-      setPostsRaw(res.data || []);
-    } catch (err) {
-      // 실패 시 에러 출력 및 빈 배열 저장으로 UI 대비
-      console.error(`게시판 번호 ${boardNum} 게시글 조회 실패`, err);
-      setPostsRaw([]);
-    }
-  };
-  */
 
   // [251023] 시설 목록 API 호출 및 상태 업데이트
   const loadFacilities = async () => {
@@ -154,7 +111,7 @@ export default function Home() {
           setNoticeBoardId(noticeBoard.boardId); // boardId 저장
           // 4. 찾은 boardId로 게시글을 요청
           const noticePostsRes = await api.get(`/api/boards/${noticeBoard.boardId}/posts`, { params: { page: 1, size: 5 } });
-          setNoticePostsRaw(noticePostsRes.data || []);
+          setNoticePostsRaw(noticePostsRes.data?.content || []); // [251110] 페이징 응답 구조에 맞춰 .content 사용
         }
 
         // 5. boardNum '02'에 해당하는 게시판의 boardId와 제목을 찾음
@@ -164,7 +121,7 @@ export default function Home() {
           setContentBoardId(contentBoard.boardId); // boardId 저장
           // 6. 찾은 boardId로 게시글을 요청
           const contentPostsRes = await api.get(`/api/boards/${contentBoard.boardId}/posts`, { params: { page: 1, size: 5 } });
-          setContentPostsRaw(contentPostsRes.data || []);
+          setContentPostsRaw(contentPostsRes.data?.content || []); // [251110] 페이징 응답 구조에 맞춰 .content 사용
         }
       } catch (err) {
         console.error('홈 화면 데이터 로딩 실패:', err);
@@ -211,9 +168,9 @@ export default function Home() {
 
             const imageUrl = validImagePath
               ? validImagePath.startsWith('/images')
-                ? `http://16.176.33.172:8181${validImagePath}`
-                : `http://16.176.33.172:8181/images/${validImagePath}`
-              : '/no-image.png'; // 기본 이미지
+                ? `http://localhost:8181${validImagePath}`
+                : `http://localhost:8181/images/${validImagePath}`
+              : defaultImage; //~ [251109] 기본 이미지 변경
 
             return (
               <Grid

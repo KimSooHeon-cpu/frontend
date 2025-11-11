@@ -114,6 +114,7 @@ export default function MyPage() { // 컴포넌트 시작
 
             ]); // Promise.all 끝
             const merged = [...(mainRes.data.data ?? []), ...(subRes.data.data ?? [])]; // 둘을 합침
+            console.log("계좌(merged):",merged);
             setAccounts(merged); // 합쳐진 목록을 상태에 저장 (UI에서는 '소지 중인 계좌'로 표기)
           } else { // 카드 타입인 경우
             const [mainRes, subRes] = await Promise.all([ // 대표/서브 카드 가져오기
@@ -121,6 +122,7 @@ export default function MyPage() { // 컴포넌트 시작
               api.get("/api/cards/sub"), // 일반 카드 API 호출
             ]); // Promise.all 끝
             const mergedCards = [...(mainRes.data.data ?? []), ...(subRes.data.data ?? [])]; // 합침
+            console.log("카드(mergedCards):", mergedCards);
             setCards(mergedCards); // 상태에 저장 (UI에서는 '소지 중인 카드'로 표기)
           } // if-else 끝
         } catch (err) { // 에러 처리
@@ -147,6 +149,8 @@ export default function MyPage() { // 컴포넌트 시작
   // [11] 대표계좌 변경 핸들러 (백엔드 엔드포인트 호출 유지)
   const handleSetMainAccount = async (id: number) => { // 함수 시작
     try { // 시도
+      //~ [추가] authState.memberId 값 확인용 콘솔 로그
+      console.log("회원ID", authState.memberId);
       await api.patch(`/api/accounts/${id}/main`); // 대표계좌로 설정하는 API 호출
       const [mainRes, subRes] = await Promise.all([ // 변경 후 목록 재조회
         api.get("/api/accounts/main"), // 대표 목록
@@ -182,7 +186,9 @@ export default function MyPage() { // 컴포넌트 시작
         api.get("/api/cards/main"),
         api.get("/api/cards/sub"),
       ]); // Promise.all 끝
-      setCards([...mainRes.data.data, ...subRes.data.data]); // 상태 갱신
+      //setCards([...mainRes.data.data, ...subRes.data.data]); // 상태 갱신
+      // ~ [251110] API 응답이 null일 경우를 대비하여 기본값([]) 추가
+      setCards([...(mainRes.data.data ?? []), ...(subRes.data.data ?? [])]); // 상태 갱신
       alert("대표카드가 변경되었습니다."); // 알림
     } catch (err) { // 실패 시
       console.error("[카드대표 변경 실패]:", err); // 에러 로깅
@@ -222,7 +228,9 @@ export default function MyPage() { // 컴포넌트 시작
           api.get("/api/accounts/main"),
           api.get("/api/accounts/sub"),
         ]); // Promise.all 끝
-        setAccounts([...mainRes.data.data, ...subRes.data.data]); // 상태 갱신
+        //setAccounts([...mainRes.data.data, ...subRes.data.data]); // 상태 갱신
+        // ~ [251110] API 응답이 null일 경우를 대비하여 기본값([]) 추가
+        setAccounts([...(mainRes.data.data ?? []), ...(subRes.data.data ?? [])]); // 상태 갱신
         alert("계좌가 등록되었습니다."); // 알림
       } else { // 카드 등록 분기
         const formData = new URLSearchParams();
