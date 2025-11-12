@@ -340,10 +340,14 @@ export default function UserPostDetail() {
                       {c.memberName || c.memberId || "익명"}
                     </Typography>
                     <Typography fontSize={12} color="grey.500" mb={isEditing ? 0.5 : 0}>
-                      {c.commentRegDate ? new Date(c.commentRegDate).toISOString().slice(0, 10) : ""}
-                      {c.commentUpdateDate
+                      {/* {c.commentRegDate ? new Date(c.commentRegDate).toISOString().slice(0, 10) : ""} : 251112 교정 */}
+                      {c.commentRegDate ? c.commentRegDate[0] + "-" + c.commentRegDate[1]  + "-" + c.commentRegDate[2] : ""}
+                      {/* {c.commentUpdateDate
                         ? ` (수정: ${new Date(c.commentUpdateDate).toISOString().slice(0, 10)})`
-                        : ""}
+                        : ""} 251112 교정 */}
+                      {c.commentUpdateDate
+                        ? ` (수정: ${c.commentUpdateDate[0] + "-" + c.commentUpdateDate[1]  + "-" + c.commentUpdateDate[2]})`
+                        : ""}  
                     </Typography>
                     {isEditing ? (
                       <>
