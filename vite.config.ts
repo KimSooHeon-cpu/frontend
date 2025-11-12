@@ -23,13 +23,13 @@ export default defineConfig({
     proxy: {
       // 백엔드 API 프록시 설정
       "/api": {
-        target: 'http://16.176.33.172:8181/',  // ⚙️ 백엔드(Spring Boot) 서버 주소
+        target: 'http://16.176.33.172/',  // ⚙️ 백엔드(Spring Boot) 서버 주소
         changeOrigin: true, // 요청 헤더의 Origin을 백엔드 기준으로 변경
         rewrite: (path) => path.replace(/^\/api/, ''), // "/api" 프리픽스 제거 후 전달
       },
       // 이미지 요청 프록시 설정 (예: 업로드 이미지 접근)
       "/images": {
-      target: "http://16.176.33.172:8181/",   // ✅ 백엔드 서버로 연결
+      target: "http://16.176.33.172/",   // ✅ 백엔드 서버로 연결
       changeOrigin: true,                 // ✅ 호스트 헤더도 백엔드 기준으로 변경
       },
     },
