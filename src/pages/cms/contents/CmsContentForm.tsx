@@ -141,7 +141,7 @@ export default function CmsContentForm() {
                 
                 // await api.put(`http://16.176.33.172:8181/api/cms/contents/${contentId}`, params, config);  // [251112] 수정 주소 다이렉트로 붙이기                 
                 // await api.put(`http://16.176.33.172:8181/api/cms/contents/${contentId}`, params.toString().replaceAll("&", "&amp;"), config);  // [251112] 수정 주소 다이렉트로 붙이기                 
-                await api.put(`http://16.176.33.172:8181/api/cms/contents/${contentId}&#174;${params.toString().replaceAll("&", "&amp;")}`);  // [251112] 수정 주소 다이렉트로 붙이기                 
+                await api.put(`http://16.176.33.172:8181/api/cms/contents/${contentId}&#63;${params.toString().replaceAll("&", "&amp;")}`);  // [251112] 수정 주소 다이렉트로 붙이기                 
                 
                 alert("콘텐츠가 수정되었습니다."); // 사용자에게 성공 알림
             } else { // 신규 등록 모드일 경우
