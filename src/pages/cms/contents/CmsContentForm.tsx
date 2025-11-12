@@ -137,9 +137,7 @@ export default function CmsContentForm() {
                 }
                 console.log("수정 직전")
                 //await api.put(`/api/cms/contents/${contentId}`, params, config); // PUT 요청으로 수정
-                // await api.put(`http://16.176.33.172:8181/api/cms/contents/${contentId}`, params, config);  // [251112] 수정 주소 다이렉트로 붙이기 
-                // 251112 : 변경후 (port 8181 제거)
-                await api.put(`http://16.176.33.172/api/cms/contents/${contentId}`, params, config);  // [251112] 수정 주소 다이렉트로 붙이기 
+                await api.put(`http://16.176.33.172:8181/api/cms/contents/${contentId}`, params, config);  // [251112] 수정 주소 다이렉트로 붙이기 
                 alert("콘텐츠가 수정되었습니다."); // 사용자에게 성공 알림
             } else { // 신규 등록 모드일 경우
                 await api.post(`/api/cms/contents`, params, config); // POST 요청으로 신규 등록
