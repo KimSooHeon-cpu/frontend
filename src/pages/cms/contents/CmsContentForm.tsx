@@ -127,11 +127,15 @@ export default function CmsContentForm() {
         };
 
         try {
+
+            console.log("수정 모드 확인 인자(isEditMode) : ", isEditMode); // 251112 추가
+
             if (isEditMode) { // 수정 모드일 경우 (URL에 contentId 존재)
                 // ✅ [수정] 수정 시에도 첨부파일 경로를 파라미터로 이동함
                 if (form.contentFilePath) {
                     params.append("contentFilePath", form.contentFilePath);
                 }
+                console.log("수정 직전")
                 await api.put(`/api/cms/contents/${contentId}`, params, config); // PUT 요청으로 수정
                 alert("콘텐츠가 수정되었습니다."); // 사용자에게 성공 알림
             } else { // 신규 등록 모드일 경우
