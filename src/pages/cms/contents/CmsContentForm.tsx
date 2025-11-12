@@ -135,7 +135,7 @@ export default function CmsContentForm() {
                 if (form.contentFilePath) {
                     params.append("contentFilePath", form.contentFilePath);
                 }
-                console.log("수정 직전 : http://16.176.33.172:8181/api/cms/contents/update : ", ${contentId})
+                console.log("수정 직전 : http://16.176.33.172:8181/api/cms/contents/update : ", contentId)
                 //await api.put(`/api/cms/contents/${contentId}`, params, config); // PUT 요청으로 수정
                 // await api.put(`http://16.176.33.172:8181/api/cms/contents/${contentId}`, params, config);  // [251112] 수정 주소 다이렉트로 붙이기 
                 await api.post(`http://16.176.33.172/api/cms/contents/update/${contentId}`, params, config);  // [251112] 수정 주소 다이렉트로 붙이기 
