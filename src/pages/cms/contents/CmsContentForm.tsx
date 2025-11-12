@@ -70,6 +70,7 @@ export default function CmsContentForm() {
                         contentType: c.contentType,
                         contentUse: c.contentUse,
                         contentNum: c.contentNum,
+                        contentFilePath: c.contentFilePath, // [251112] 추가-기존 첨부파일 경로도 상태에 반영
                     });
 
                 })
@@ -113,9 +114,9 @@ export default function CmsContentForm() {
         params.append("contentType", form.contentType); // 콘텐츠 유형(이용안내·상품안내) 추가
         params.append("contentUse", form.contentUse); // 사용여부(Y/N) 추가
         params.append("contentNum", String(form.contentNum)); // 정렬번호를 문자열로 변환하여 추가 (숫자는 문자열로 보내야 함)
-        if (form.contentFilePath) {
+        /*if (form.contentFilePath) {
             params.append("contentFilePath", form.contentFilePath); //* [251013] 💾 첨부파일 로직 추가
-        }
+        }*/
 
         // ⚠️ axiosCms의 기본 Content-Type(application/json) 무시하도록 설정
         const config = {
@@ -127,6 +128,10 @@ export default function CmsContentForm() {
 
         try {
             if (isEditMode) { // 수정 모드일 경우 (URL에 contentId 존재)
+                // ✅ [수정] 수정 시에도 첨부파일 경로를 파라미터로 이동함
+                if (form.contentFilePath) {
+                    params.append("contentFilePath", form.contentFilePath);
+                }
                 await api.put(`/api/cms/contents/${contentId}`, params, config); // PUT 요청으로 수정
                 alert("콘텐츠가 수정되었습니다."); // 사용자에게 성공 알림
             } else { // 신규 등록 모드일 경우
