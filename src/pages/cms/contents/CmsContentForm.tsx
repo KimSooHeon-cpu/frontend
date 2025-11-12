@@ -102,40 +102,46 @@ export default function CmsContentForm() {
         e.preventDefault(); // 기본 form 제출(새로고침) 동작을 막음 — React는 수동으로 처리해야 함
         console.log("handleSubmit 실행됨");
 
-        const params = new URLSearchParams(); // 백엔드가 요구하는 전송 형식(application/x-www-form-urlencoded)을 사용하기 위한 객체 생성
+        // const params = new URLSearchParams(); // 백엔드가 요구하는 전송 형식(application/x-www-form-urlencoded)을 사용하기 위한 객체 생성
+        const formData = new FormData(); //* [251112] 백엔드 Content-Type 변경에 따라 FormData 객체로 전환
 
         /*  백엔드에서 @RequestParam이나 @ModelAttribute로 값을 받을 때 application/x-www-form-urlencoded 형식으로 전달할 경우
             ! JSON방식인 FormData()으로 전달하면 에러 발생함
             * URLSearchParams은 주소창에 붙는 형식을 토큰키로 인코딩해줄 수 있음 
             ^ FormData() 대신 URLSearchParams()를 사용하면, 자동으로 'application/x-www-form-urlencoded' 형식으로 인코딩됨
         */
-        params.append("contentTitle", form.contentTitle); // 제목 데이터 추가
-        params.append("contentContent", form.contentContent); // 본문(내용) 데이터 추가
-        params.append("contentType", form.contentType); // 콘텐츠 유형(이용안내·상품안내) 추가
-        params.append("contentUse", form.contentUse); // 사용여부(Y/N) 추가
-        params.append("contentNum", String(form.contentNum)); // 정렬번호를 문자열로 변환하여 추가 (숫자는 문자열로 보내야 함)
+
+        // * [251112] params → formData 변경함
+        formData.append("contentTitle", form.contentTitle); // 제목 데이터 추가
+        formData.append("contentContent", form.contentContent); // 본문(내용) 데이터 추가
+        formData.append("contentType", form.contentType); // 콘텐츠 유형(이용안내·상품안내) 추가
+        formData.append("contentUse", form.contentUse); // 사용여부(Y/N) 추가
+        formData.append("contentNum", String(form.contentNum)); // 정렬번호를 문자열로 변환하여 추가 (숫자는 문자열로 보내야 함)
         /*if (form.contentFilePath) {
             params.append("contentFilePath", form.contentFilePath); //* [251013] 💾 첨부파일 로직 추가
         }*/
 
         // ⚠️ axiosCms의 기본 Content-Type(application/json) 무시하도록 설정
-        const config = {
+        /*const config = {
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded", // axios 기본값인 JSON 전송 대신, URL 인코딩 방식으로 지정
 
             },
-        };
+        };*/ // [251112] FormData 사용 시 Content-Type 헤더는 axios가 자동으로 'multipart/form-data'로 설정해서 이제 필요없음
 
         try {
             if (isEditMode) { // 수정 모드일 경우 (URL에 contentId 존재)
                 // ✅ [수정] 수정 시에도 첨부파일 경로를 파라미터로 이동함
-                if (form.contentFilePath) {
+                /*if (form.contentFilePath) {
                     params.append("contentFilePath", form.contentFilePath);
                 }
                 await api.put(`/api/cms/contents/${contentId}`, params, config); // PUT 요청으로 수정
+                */
+                await api.put(`/api/cms/contents/${contentId}`, formData); //* [251112] FormData로 수정 요청
                 alert("콘텐츠가 수정되었습니다."); // 사용자에게 성공 알림
             } else { // 신규 등록 모드일 경우
-                await api.post(`/api/cms/contents`, params, config); // POST 요청으로 신규 등록
+                // await api.post(`/api/cms/contents`, params, config); // POST 요청으로 신규 등록
+                await api.post(`/api/cms/contents`, formData); //* [251112] FormData로 등록 요청 (등록도 함께 수정)
                 alert("콘텐츠가 등록되었습니다."); // 사용자에게 성공 알림
             }
             navigate("/cms/contents"); // 작업 완료 후 목록 화면으로 이동
