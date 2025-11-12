@@ -195,10 +195,12 @@ const CmsPostList: React.FC = () => { // React 함수형 컴포넌트 선언
                     {post.postViewCount}
                   </td>
                   <td className="px-5 py-3 text-gray-600">
-                    {post.postRegDate ? new Date(post.postRegDate).toISOString().slice(0, 10) : "-"}
+                    {/* {post.postRegDate ? new Date(post.postRegDate).toISOString().slice(0, 10) : "-"} : 251112 교정 */}
+                    {post.postRegDate[0] + "-" + post.postRegDate[1] + "-" + post.postRegDate[2]}
                   </td>
                   <td className="px-5 py-3 text-gray-600">
-                    {post.postModDate ? new Date(post.postModDate).toISOString().slice(0, 10) : "-"}
+                    {/* {post.postModDate ? new Date(post.postModDate).toISOString().slice(0, 10) : "-"} : 251112 교정 */}
+                    {post.postRegDate[0] + "-" + post.postRegDate[1] + "-" + post.postRegDate[2]}
                   </td>
                 </tr>
               ))
