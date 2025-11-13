@@ -105,8 +105,6 @@ return ( // 화면 렌더링 시작
 {/* 💡 contentFilePath가 있으면 파일명과 링크를 하나의 목록 항목으로 표시 */}
 {content.contentFilePath ? (
   <ul className="list-disc list-inside">
-    {/* 첨부파일명 텍스트만 표시 */}
-    <p className="text-gray-600">첨부파일명 : {content.contentFilePath}</p>
     
     {/* 단일 파일 링크를 목록 항목으로 표시 */}
     <li> 
