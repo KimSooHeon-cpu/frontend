@@ -104,20 +104,17 @@ return ( // 화면 렌더링 시작
 
 {/* 💡 contentFilePath가 있으면 파일명과 링크를 하나의 목록 항목으로 표시 */}
 {content.contentFilePath ? (
-  <ul className="list-disc list-inside">
-    
-    {/* 단일 파일 링크를 목록 항목으로 표시 */}
-    <li> 
-      <a
-        href={`http://16.176.33.172:8181/${content.contentFilePath}`}
-        target="_blank" 
-        rel="noopener noreferrer" 
-        className="text-blue-600 hover:underline" 
-      >
-        {content.contentFilePath} 
-      </a>
-    </li> 
-  </ul>
+  <div className="mb-2">
+    {/* 단일 파일 링크를 단순 텍스트/링크 블록으로 표시 */}
+    <a
+      href={`http://16.176.33.172:8181/${content.contentFilePath}`}
+      target="_blank" 
+      rel="noopener noreferrer" 
+      className="text-blue-600 hover:underline" 
+    >
+      {content.contentFilePath} 
+    </a>
+  </div>
 ) : null}
 
 {/* 💡 files 배열이 있으면 다중 파일 목록을 표시 */}
