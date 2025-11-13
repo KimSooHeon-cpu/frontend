@@ -29,7 +29,7 @@ contentNum: number; // 정렬번호(2depth)
 memberId: string; // 작성자 ID
 regDate: string; // 등록일
 modDate: string; // 수정일
-contentFilePath : string ;// 콘텐츠 첨부 파일 경로 // [251113] 추가
+  contentFilePath : string ;// 콘텐츠 첨부 파일 경로 // [251113] 추가
 } // 콘텐츠 응답 DTO 정의 끝
 
 export default function CmsContentDetail() { // 메인 컴포넌트 시작
@@ -93,8 +93,6 @@ return ( // 화면 렌더링 시작
 {/* // ?-------------------------------------- 본문(내용) 영역 -------------------------------------- */}
 <div className="border p-4 rounded mb-6 whitespace-pre-line min-h-[200px]"> 
 {content.contentContent} {/* 콘텐츠 내용 출력 */}
-        {/* 251113 개선 => html 파싱되어 출력되도록 처리 */}
-        {content.contentContent} {/* 콘텐츠 내용 출력 */}
 </div>
 {/* // ?-------------------------------------- 본문(내용) 영역 -------------------------------------- */}
 
@@ -102,7 +100,6 @@ return ( // 화면 렌더링 시작
 <div className="mb-6"> 
 <p className="font-semibold mb-1">첨부파일</p> {/* 첨부파일 제목 */}
 
-        <p>첨부파일명 : {content.contentFilePath}</p>
 {content.contentFilePath ? (
 <ul className="list-disc list-inside"> {/* 파일 리스트 */}           
 <li> {/* 파일 리스트 항목 */}
@@ -121,15 +118,13 @@ className="text-blue-600 hover:underline" // 링크 스타일
 ) : '첨부 파일 없음'}
 
 {files.length > 0 ? ( // 파일이 있을 때 조건문
-          첨부 파일 있음 
 <ul className="list-disc list-inside"> {/* 파일 리스트 */}
 {files.map((f) => ( // 파일 배열 반복 렌더링
 <li key={f.fileId}> {/* 파일 리스트 항목 */}
 <a
-                  // href={`http://16.176.33.172:8181${f.filePath}`} // 파일 다운로드 링크 20251107 수정                  
-                  // 251113 수정 적용
-                  href={`http://16.176.33.172:8181/{content.contentFilePath}`}
-                  href={`http://16.176.33.172:8181${f.filePath}`} // 파일 다운로드 링크 20251107 수정                                                      
+// href={`http://16.176.33.172:8181${f.filePath}`} // 파일 다운로드 링크 20251107 수정                  
+// 251113 수정 적용
+href={`http://16.176.33.172:8181/{content.contentFilePath}`}
 target="_blank" // 새 탭에서 열기
 rel="noopener noreferrer" // 보안 속성
 className="text-blue-600 hover:underline" // 링크 스타일
