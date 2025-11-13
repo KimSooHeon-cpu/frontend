@@ -90,30 +90,26 @@ export default function CmsContentDetail() { // 메인 컴포넌트 시작
       {/* // !--------------------------------- 상위 메뉴 및 제목 표시 영역 --------------------------------- */}
       
       {/* // ?-------------------------------------- 본문(내용) 영역 -------------------------------------- */}
-      <div
-        className="border p-4 rounded mb-6 min-h-[200px]"
+      <div className="border p-4 rounded mb-6 min-h-[200px]"
         dangerouslySetInnerHTML={{ __html: content.contentContent }} />
       {/* // ?-------------------------------------- 본문(내용) 영역 -------------------------------------- */}
 
       {/* // *--------------------------------------💾 첨부파일 영역 --------------------------------------*/}
       <div className="mb-6"> 
         <p className="font-semibold mb-1">첨부파일</p> {/* 첨부파일 제목 */}
-        {files.length > 0 ? ( // 파일이 있을 때 조건문
+        {content.contentFilePath ? ( // 파일 경로가 있을 때 조건문
           <ul className="list-disc list-inside"> {/* 파일 리스트 */}
-            {files.map((f) => ( // 파일 배열 반복 렌더링
-              <li key={f.fileId}> {/* 파일 리스트 항목 */}
+              <li> {/* 파일 리스트 항목 */}
                 <a
-                  // href={`http://16.176.33.172:8181${f.filePath}`} // 파일 다운로드 링크 20251107 수정                  
-                  // 251113 수정 적용
-                  href={`http://16.176.33.172:8181/{content.contentContent}`}
+                  // [수정] content.contentFilePath를 사용하도록 수정
+                  href={`http://16.176.33.172:8181${content.contentFilePath}`}
                   target="_blank" // 새 탭에서 열기
                   rel="noopener noreferrer" // 보안 속성
                   className="text-blue-600 hover:underline" // 링크 스타일
                 >
-                  {f.fileOriginalName} {/* 원본 파일명 표시 */}
+                  {content.contentFilePath.split("/").pop()} {/* 원본 파일명 표시 */}
                 </a>
               </li>
-            ))}
           </ul>
         ) : (
           <p className="text-gray-500">첨부파일이 없습니다.</p> // 파일이 없을 때 표시
