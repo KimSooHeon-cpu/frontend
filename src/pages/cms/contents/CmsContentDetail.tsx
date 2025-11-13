@@ -9,7 +9,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import api from "../../../api/axios";
+import api from "../../../api/axiosCms"; // [251113] CMS용 인증 API로 수정
 import { Box, Button, Typography, Paper } from "@mui/material";
 
 // [3] 콘텐츠 데이터 타입 정의
