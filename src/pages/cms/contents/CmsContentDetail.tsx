@@ -102,7 +102,7 @@ return ( // 화면 렌더링 시작
 <div className="mb-6"> 
 <p className="font-semibold mb-1">첨부파일</p> {/* 첨부파일 제목 */}
 
-        <p>첨부파일명 : {content.contentFilePath}</p>
+<p>첨부파일명 : {content.contentFilePath}</p>
 {content.contentFilePath ? (
 <ul className="list-disc list-inside"> {/* 파일 리스트 */}           
 <li> {/* 파일 리스트 항목 */}
@@ -121,24 +121,25 @@ className="text-blue-600 hover:underline" // 링크 스타일
 ) : '첨부 파일 없음'}
 
 {files.length > 0 ? ( // 파일이 있을 때 조건문
-          '첨부 파일 있음'
-<ul className="list-disc list-inside"> {/* 파일 리스트 */}
-{files.map((f) => ( // 파일 배열 반복 렌더링
-<li key={f.fileId}> {/* 파일 리스트 항목 */}
-<a
-href={`http://16.176.33.172:8181${f.filePath}`} // 파일 다운로드 링크 20251107 수정                                                      
-target="_blank" // 새 탭에서 열기
-rel="noopener noreferrer" // 보안 속성
-className="text-blue-600 hover:underline" // 링크 스타일
->
-{f.fileOriginalName} {/* 원본 파일명 표시 */}
-</a>
-</li>
-)}
-</ul>
+          첨부 파일 있음
+          <ul className="list-disc list-inside"> {/* 파일 리스트 */}
+          {files.map((f) => ( // 파일 배열 반복 렌더링
+                <li key={f.fileId}> {/* 파일 리스트 항목 */}
+                        <a href={`http://16.176.33.172:8181${f.filePath}`} // 파일 다운로드 링크 20251107 수정                                                      
+                           target="_blank" // 새 탭에서 열기
+                           rel="noopener noreferrer" // 보안 속성
+                           className="text-blue-600 hover:underline" // 링크 스타일
+                        >   
+                        {f.fileOriginalName} {/* 원본 파일명 표시 */}
+                        </a>
+                </li>
+          )}
+          </ul>
+)
  : (
-<p className="text-gray-500">첨부파일이 없습니다.</p> // 파일이 없을 때 표시
-)}
+        <p className="text-gray-500">첨부파일이 없습니다.</p> // 파일이 없을 때 표시
+    )
+}
 </div>
 {/* // *--------------------------------------💾 첨부파일 영역 --------------------------------------*/}
 
