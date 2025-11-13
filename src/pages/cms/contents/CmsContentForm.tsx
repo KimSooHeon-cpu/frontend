@@ -259,6 +259,10 @@ export default function CmsContentForm() {
                                 {form.contentFilePath.split("/").pop()}
                             </a>
                         </p>
+
+                        // 이 부분에서 이미 업로드되었던 실제 파일의 명세(이름)을 추가(전송용) : 보이지 않도록 처리하기 위해 hidden
+                        // 속성으로 처리 : [251113]
+                        <input type="hidden" name="contentFilePath" value={form.contentFilePath} />
                     )}
                 </div>
                 <br />
