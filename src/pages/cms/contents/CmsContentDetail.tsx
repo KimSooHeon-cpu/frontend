@@ -11,7 +11,6 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../../../api/axios";
 import { Box, Button, Typography, Paper } from "@mui/material";
-import { toast } from "react-toastify";
 
 // [3] 콘텐츠 데이터 타입 정의
 interface ContentDetail {
@@ -42,7 +41,7 @@ const CmsContentDetail: React.FC = () => {
         setContent(res.data.data);
       } catch (err) { // 예외 발생 시
         console.error("콘텐츠 상세조회 실패:", err); // 콘솔에 오류 출력
-        toast.error("콘텐츠를 불러오는 데 실패했습니다.");
+        alert("콘텐츠를 불러오는 데 실패했습니다.");
         setError("콘텐츠를 불러오지 못했습니다.");
       } finally { // try-catch 종료 후 항상 실행
         setLoading(false); // 로딩 상태 false로 변경
@@ -55,11 +54,11 @@ const CmsContentDetail: React.FC = () => {
     if (window.confirm(`'${content?.contentTitle}' 콘텐츠를 정말로 삭제하시겠습니까?`)) {
     try { // 예외 처리 시작
       await api.delete(`/api/cms/contents/${contentId}`);
-      toast.success("콘텐츠가 성공적으로 삭제되었습니다.");
+      alert("콘텐츠가 성공적으로 삭제되었습니다.");
       navigate("/cms/contents");
     } catch (err) { // 요청 예외 발생 시
       console.error("삭제 실패:", err); // 콘솔에 오류 로그
-      toast.error("콘텐츠 삭제에 실패했습니다.");
+      alert("콘텐츠 삭제에 실패했습니다.");
     }
     }
   }; // handleDelete 함수 끝
