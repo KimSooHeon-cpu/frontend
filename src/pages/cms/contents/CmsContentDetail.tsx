@@ -103,7 +103,9 @@ export default function CmsContentDetail() { // 메인 컴포넌트 시작
             {files.map((f) => ( // 파일 배열 반복 렌더링
               <li key={f.fileId}> {/* 파일 리스트 항목 */}
                 <a
-                  href={`http://16.176.33.172:8181${f.filePath}`} // 파일 다운로드 링크 20251107 수정                  
+                  // href={`http://16.176.33.172:8181${f.filePath}`} // 파일 다운로드 링크 20251107 수정                  
+                  // 251113 수정 적용
+                  href={`http://16.176.33.172:8181/{content.contentContent}`}
                   target="_blank" // 새 탭에서 열기
                   rel="noopener noreferrer" // 보안 속성
                   className="text-blue-600 hover:underline" // 링크 스타일
