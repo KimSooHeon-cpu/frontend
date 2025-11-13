@@ -29,6 +29,7 @@ interface ContentResponse { // 콘텐츠 응답 DTO 정의 시작
   memberId: string; // 작성자 ID
   regDate: string; // 등록일
   modDate: string; // 수정일
+  contentFilePath : string ;// 콘텐츠 첨부 파일 경로 // [251113] 추가
 } // 콘텐츠 응답 DTO 정의 끝
 
 export default function CmsContentDetail() { // 메인 컴포넌트 시작
