@@ -128,7 +128,7 @@ className="text-blue-600 hover:underline" // 링크 스타일
 <a
                   // href={`http://16.176.33.172:8181${f.filePath}`} // 파일 다운로드 링크 20251107 수정                  
                   // 251113 수정 적용
-                  href={`http://16.176.33.172:8181/${content.contentFilePath}`}
+                  // href={`http://16.176.33.172:8181/${content.contentFilePath}`}
                   href={`http://16.176.33.172:8181${f.filePath}`} // 파일 다운로드 링크 20251107 수정                                                      
 target="_blank" // 새 탭에서 열기
 rel="noopener noreferrer" // 보안 속성
@@ -137,9 +137,9 @@ className="text-blue-600 hover:underline" // 링크 스타일
 {f.fileOriginalName} {/* 원본 파일명 표시 */}
 </a>
 </li>
-))}
+)}
 </ul>
-) : (
+ : (
 <p className="text-gray-500">첨부파일이 없습니다.</p> // 파일이 없을 때 표시
 )}
 </div>
