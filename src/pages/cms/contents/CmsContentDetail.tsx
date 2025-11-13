@@ -44,14 +44,14 @@ useEffect(() => { // 컴포넌트가 처음 렌더링될 때 또는 contentId가
 const fetchDetail = async () => { // 상세 조회 데이터를 불러올 비동기 함수 선언
 console.log("콘텐츠 정보 불러오기 URL: ", `/api/cms/contents/${contentId}`)
 try { // 예외 처리 시작
-    const res = await api.get(`/api/cms/contents/${contentId}`); // API 호출: 콘텐츠 상세 조회
-    const data = res.data.data; // API 응답에서 data 속성 추출
-    setContent(data.content); // 콘텐츠 정보 상태에 저장
-    setFiles(data.files || []); //💾  첨부파일 목록 상태에 저장
+    const res = await api.get(`/api/cms/contents/${contentId}`); // API 호출: 콘텐츠 상세 조회
+    const data = res.data.data; // API 응답에서 data 속성 추출
+    setContent(data.content); // 콘텐츠 정보 상태에 저장
+    setFiles(data.files || []); //💾  첨부파일 목록 상태에 저장
 } catch (err) { // 예외 발생 시
-    console.error("콘텐츠 상세조회 실패:", err); // 콘솔에 오류 출력
+    console.error("콘텐츠 상세조회 실패:", err); // 콘솔에 오류 출력
 } finally { // try-catch 종료 후 항상 실행
-    setLoading(false); // 로딩 상태 false로 변경
+    setLoading(false); // 로딩 상태 false로 변경
 }
 }; // 비동기 함수 선언 끝
 fetchDetail(); // 상세 조회 함수 실행
@@ -62,16 +62,16 @@ const handleEdit = () => navigate(`/cms/contents/form?contentId=${contentId}`); 
 const handleDelete = async () => { // 삭제 버튼 클릭 시 실행되는 함수
 if (!window.confirm("정말 삭제하시겠습니까?")) return; // 삭제 확인창 표시
 try { // 예외 처리 시작
-    const res = await api.delete(`/api/cms/contents/${contentId}`); // DELETE API 호출
-    if (res.data.code === 0) { // 성공 코드 0이면
-        alert("삭제되었습니다."); // 사용자에게 알림
-        navigate("/cms/contents"); // 목록 화면으로 이동
-    } else { // 실패 코드면
-        alert(res.data.message || "삭제 실패"); // 오류 메시지 표시
-    }
+    const res = await api.delete(`/api/cms/contents/${contentId}`); // DELETE API 호출
+    if (res.data.code === 0) { // 성공 코드 0이면
+        alert("삭제되었습니다."); // 사용자에게 알림
+        navigate("/cms/contents"); // 목록 화면으로 이동
+    } else { // 실패 코드면
+        alert(res.data.message || "삭제 실패"); // 오류 메시지 표시
+    }
 } catch (err) { // 요청 예외 발생 시
-    console.error("삭제 실패:", err); // 콘솔에 오류 로그
-    alert("서버 오류로 삭제에 실패했습니다."); // 사용자에게 실패 알림
+    console.error("삭제 실패:", err); // 콘솔에 오류 로그
+    alert("서버 오류로 삭제에 실패했습니다."); // 사용자에게 실패 알림
 }
 }; // handleDelete 함수 끝
 
@@ -83,61 +83,66 @@ return ( // 화면 렌더링 시작
 <h2 className="text-2xl font-bold mb-6 border-b pb-2">콘텐츠 상세</h2> {/* 페이지 제목 */}
 
 {/* // !--------------------------------- 상위 메뉴 및 제목 표시 영역 --------------------------------- */}
-<div className="mb-6"> 
+<div className="mb-6"> 
 <p className="text-gray-600 mb-1">상위 메뉴 : {content.contentType}</p> {/* 상위 메뉴 표시 */}
 <p className="text-gray-600">정렬 번호 : {content.contentNum}</p> {/* 상위 메뉴의 정렬번호 표시 */}
 <p className="text-gray-600">제목 : {content.contentTitle}</p> {/* 콘텐츠 제목 표시 */}
-</div>      
+</div>      
 {/* // !--------------------------------- 상위 메뉴 및 제목 표시 영역 --------------------------------- */}
 
-{/* // ?-------------------------------------- 본문(내용) 영역 (수정: dangerouslySetInnerHTML 적용) -------------------------------------- */}
-<div 
-  className="border p-4 rounded mb-6 min-h-[200px]"
-  // 💡 [핵심 해결] HTML 문자열을 태그로 해석하여 렌더링
-  dangerouslySetInnerHTML={{ __html: content.contentContent }} 
+{/* // ?-------------------------------------- 본문(내용) 영역 -------------------------------------- */}
+<div 
+  className="border p-4 rounded mb-6 min-h-[200px]"
+  // 💡 HTML 문자열을 태그로 해석하여 렌더링
+  dangerouslySetInnerHTML={{ __html: content.contentContent }} 
 />
 {/* // ?-------------------------------------- 본문(내용) 영역 -------------------------------------- */}
 
-{/* // *--------------------------------------💾 첨부파일 영역 (수정: 구문 오류 및 중복 제거) --------------------------------------*/}
-<div className="mb-6"> 
+{/* // *--------------------------------------💾 첨부파일 영역 (수정됨) --------------------------------------*/}
+<div className="mb-6"> 
 <p className="font-semibold mb-1">첨부파일</p> {/* 첨부파일 제목 */}
 
-{/* 💡 contentFilePath가 있으면 단일 파일을 표시 */}
+{/* 💡 contentFilePath가 있으면 단일 파일 표시 */}
 {content.contentFilePath ? (
-  <ul className="list-disc list-inside mb-2">
-    <p>첨부파일명 : {content.contentFilePath}</p>
-    <li> 
-      <a
-        href={`http://16.176.33.172:8181/${content.contentFilePath}`}
-        target="_blank" 
-        rel="noopener noreferrer" 
-        className="text-blue-600 hover:underline" 
-      >
-        {content.contentFilePath} 
-      </a>
-    </li> 
-  </ul>
+  <ul className="list-disc list-inside">
+    {/* '첨부파일명' 텍스트를 목록 항목 밖에 일반 텍스트로 표시 */}
+    <p className="text-gray-600">첨부파일명 : {content.contentFilePath}</p>
+    
+    {/* 단일 파일 링크를 목록 항목으로 표시 */}
+    <li> 
+      <a
+        href={`http://16.176.33.172:8181/${content.contentFilePath}`}
+        target="_blank" 
+        rel="noopener noreferrer" 
+        className="text-blue-600 hover:underline" 
+      >
+        {content.contentFilePath} 
+      </a>
+    </li> 
+  </ul>
 ) : null}
 
-{/* 💡 files 배열이 있으면 다중 파일을 표시 */}
-{files.length > 0 ? (
-  <ul className="list-disc list-inside">
-    {files.map((f) => ( // 파일 배열 반복 렌더링
-      <li key={f.fileId}> {/* 파일 리스트 항목 */}
-        <a
-          href={`http://16.176.33.172:8181${f.filePath}`} 
-          target="_blank" // 새 탭에서 열기
-          rel="noopener noreferrer" // 보안 속성
-          className="text-blue-600 hover:underline" // 링크 스타일
-        >
-          {f.fileOriginalName} {/* 원본 파일명 표시 */}
-        </a>
-      </li>
-    ))}
-  </ul>
-) : (
-  // contentFilePath도 files도 없을 때만 "첨부파일이 없습니다" 표시
-  (content.contentFilePath || files.length > 0) ? null : <p className="text-gray-500">첨부파일이 없습니다.</p>
+{/* 💡 files 배열이 있으면 다중 파일 표시 */}
+{files.length > 0 && (
+  <ul className="list-disc list-inside mt-2">
+    {files.map((f) => ( // 파일 배열 반복 렌더링
+      <li key={f.fileId}> {/* 파일 리스트 항목 */}
+        <a
+          href={`http://16.176.33.172:8181${f.filePath}`} 
+          target="_blank" // 새 탭에서 열기
+          rel="noopener noreferrer" // 보안 속성
+          className="text-blue-600 hover:underline" // 링크 스타일
+        >
+          {f.fileOriginalName} {/* 원본 파일명 표시 */}
+        </a>
+      </li>
+    ))}
+  </ul>
+)}
+
+{/* 첨부파일이 contentFilePath에도 files 배열에도 없을 때만 "첨부파일이 없습니다" 표시 */}
+{!(content.contentFilePath || files.length > 0) && (
+    <p className="text-gray-500">첨부파일이 없습니다.</p>
 )}
 </div>
 {/* // *--------------------------------------💾 첨부파일 영역 --------------------------------------*/}
