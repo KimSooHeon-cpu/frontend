@@ -121,7 +121,7 @@ className="text-blue-600 hover:underline" // 링크 스타일
 ) : '첨부 파일 없음'}
 
 {files.length > 0 ? ( // 파일이 있을 때 조건문
-          첨부 파일 있음
+          '첨부 파일 있음'
           <ul className="list-disc list-inside"> {/* 파일 리스트 */}
           {files.map((f) => ( // 파일 배열 반복 렌더링
                 <li key={f.fileId}> {/* 파일 리스트 항목 */}
@@ -133,7 +133,7 @@ className="text-blue-600 hover:underline" // 링크 스타일
                         {f.fileOriginalName} {/* 원본 파일명 표시 */}
                         </a>
                 </li>
-          )}
+          ))}
           </ul>
 )
  : (
