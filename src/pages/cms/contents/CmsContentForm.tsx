@@ -174,6 +174,12 @@ export default function CmsContentForm() {
     // [5] 하단 버튼 (등록/수정, 취소)
     const handleCancel = () => navigate("/cms/contents"); // 목록으로 복귀
 
+    // form.contentFilePath path 점검 : 251123
+    // 기존 경로값 : /images/content/images/업로드 이미지 파일
+    // 변경후 경로값 : /up
+
+    console.log("form.contentFilePath : ", form.contentFilePath);
+
     // [6] 렌더링 (Tailwind 폼 구성)
     return (
         <div className="form-container">
@@ -230,7 +236,8 @@ export default function CmsContentForm() {
                                 const fullPath =
                                     path.startsWith("/images/") || path.startsWith("http")
                                         ? path
-                                        : `/images/content/${path}`; // ✅ 백엔드 저장 구조에 맞게 prefix 추가
+                                        : `/download_path/${path}`; // ✅ 백엔드 저장 구조에 맞게 prefix 추가
+                                        // 기존 다운로드 경로 /images/content/ 를 /download_path로 정정 : 251113
 
                                 console.log("✅ 업로드 완료, 저장 경로:", fullPath);
                                 setForm((prev) => ({ ...prev, contentFilePath: fullPath }));

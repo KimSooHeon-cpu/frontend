@@ -438,8 +438,7 @@ export default function UserPostDetail() {
                   <TableCell sx={{ textAlign: "left" }}>{p.postTitle}</TableCell>
                   <TableCell>{p.memberName}</TableCell>
                   <TableCell>{p.postViewCount}</TableCell>
-                  {/* <TableCell>{new Date(p.postRegDate).toISOString().slice(0, 10)}</TableCell> : 251112 교정 */}
-                  <TableCell>p.postRegDate[0]+ "-" + p.postRegDate[1] + "-" + p.postRegDate[2]</TableCell>
+                  <TableCell>{new Date(p.postRegDate).toISOString().slice(0, 10)}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
