@@ -11,7 +11,8 @@ import api from "../../../api/axios";
 
 // MUI 컴포넌트 import
 import {
-  Box, Paper, Typography,
+  //Box, Paper, Typography,
+  Box, Paper, Typography, Button, //* [251113] 첨부파일 다운로드 버튼(Button) 추가
 } from "@mui/material";
 
 
@@ -25,6 +26,7 @@ interface ContentDetail {
   contentUse: string;
   contentRegDate: string;
   contentModDate: string;
+  contentFilePath?: string; //* [251113] 첨부파일 다운로드
 }
 
 // [4] 컴포넌트 정의 시작
@@ -96,6 +98,25 @@ const ContentDetail: React.FC = () => {
           }}
         />
       </Paper>
+
+      {/* //* --------------------------- [251113] 첨부파일 다운로드 -----------------------------------*/}
+      {content.contentFilePath && (
+        <Box sx={{ mb: 3, mt: -2 }}>
+          <Typography component="span" fontWeight="bold" mr={1}>
+            첨부파일:{" "}
+          </Typography>
+          <Button
+            variant="text"
+            color="primary"
+            href={`http://16.176.33.172:8181${content.contentFilePath}`}
+            target="_blank"
+            sx={{ fontWeight: 600, textDecoration: "underline", px: 0.5, minWidth: 0 }}
+          >
+            {content.contentFilePath.split("/").pop()}
+          </Button>
+        </Box>
+      )}
+      {/* //* --------------------------- [251113] 첨부파일 다운로드 -----------------------------------*/}
 
       <Typography variant="caption" color="text.secondary" sx={{ display: 'block', textAlign: 'right' }}>
         최종 수정일: {content.contentModDate?.split("T")[0] || "-"}
