@@ -135,7 +135,7 @@ export default function CmsContentForm() {
                 if (form.contentFilePath) {
                     params.append("contentFilePath", form.contentFilePath);
                 }
-                console.log("수정 직전 : http://16.176.33.172:8181/api/cms/contents : ", contentId)   
+                console.log("수정 직전 : http://16.176.33.172:8181/api/cms/contents/update : ", contentId)   
                 console.log("params(원본) : ", params.toString())  
                 console.log("params(변환) : ", params.toString().replaceAll("&", "&amp;"))  
                 
