@@ -121,7 +121,7 @@ return ( // 화면 렌더링 시작
 {files.length > 0 ? (
   <ul className="list-disc list-inside mt-2">
     {files.map((f) => ( // 파일 배열 반복 렌더링
-      <li key={f.fileId}> {/* 파일 리스트 항목 */}
+      <div key={f.fileId}> {/* 파일 리스트 항목 */}
         <a
           href={`http://16.176.33.172:8181${f.filePath}`} 
           target="_blank" // 새 탭에서 열기
@@ -130,7 +130,7 @@ return ( // 화면 렌더링 시작
         >
           {f.fileOriginalName} {/* 원본 파일명 표시 */}
         </a>
-      </li>
+      </div>
     ))}
   </ul>
 ) : (
