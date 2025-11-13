@@ -113,7 +113,9 @@ export default function CmsPostForm() {
 
     try {
       if (isEditMode) {
-        await api.put(`/api/cms/boards/${boardId}/posts/${postId}`, params, config);
+        // [수정] PUT -> POST 방식으로 변경 및 URL 수정
+        // await api.put(`/api/cms/boards/${boardId}/posts/${postId}`, params, config);
+        await api.post(`/api/cms/boards/${boardId}/posts/update/${postId}`, params, config);
         alert("게시글이 수정되었습니다.");
       } else {
         await api.post(`/api/cms/boards/${boardId}/posts`, params, config);
